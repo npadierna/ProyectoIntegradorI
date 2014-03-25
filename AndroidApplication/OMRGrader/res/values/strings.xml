@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General Application's Strings -->
+    <string name="app_name">OMR Grader</string>
+
+    <!-- Grade Session Activity -->
+    <string name="back_pressed_alert_dialog_text">Al presionar "Aceptar" se cerrará la Sesión de calificación actual.\n\n¿Desea continuar?</string>
+    <string name="back_pressed_alert_dialog_title">¿Cerrar La Sesión?</string>
+    <string name="compute_students_score_button_text">Calcular Los Resultados</string>
+    <string name="start_taking_students_pictures_button_text">Tomar Imágenes De Los Estudiantes</string>
+    <string name="take_reference_picture_button_text">Tomar Imagen De Referecia</string>
+
+    <!-- Introduction Activity -->
+    <string name="no_camera_alert_dialog_text">No se encuentra en el dispositivo ninguna aplicación o Hardware capaz de capturar fotos.\n\nLa aplicación se cerrará.</string>
+    <string name="no_camera_alert_dialog_title">No Hay Cámara</string>
+    <string name="start_omr_grader_button_text">Empezar con OMR Grader</string>
+
+    <!-- Session Data Dialog -->
+    <string name="information_text">Especifique el nombre de la Sesión y la cantidad de Test de estudiantes:</string>
+    <string name="session_dialog_title">Crear Sesión</string>
+    <string name="session_name_text_hint">Nombre de la Sesión</string>
+    <string name="students_tests_text_hint">Cantidad de test</string>
+
+    <!-- Utilities -->
+    <string name="accept_text">Aceptar</string>
+    <string name="cancel_text">Cancelar</string>
+    <string name="format_for_date_formatter">ddMMyyyy_HHmmss</string>
+
+</resources>

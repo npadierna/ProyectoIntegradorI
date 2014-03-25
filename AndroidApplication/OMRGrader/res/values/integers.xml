@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Grader Session Model -->
+    <integer name="options_per_question">6</integer>
+
+    <!-- Session Data Dialog -->
+    <integer name="ems_for_edit_text">10</integer>
+
+</resources>
