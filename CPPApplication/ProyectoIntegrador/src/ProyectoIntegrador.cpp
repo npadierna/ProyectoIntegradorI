@@ -305,15 +305,14 @@ int main(int argc, char *argv[]) {
 		temp++;
 	}
 
+	free(tempAnswerData);
+
 	return (EXIT_SUCCESS);
 }
 
 void getAnswers(Mat imgToProcess, vector<Point2f> pList,
 		struct list_item_struct *tempAnswerData, int radius, int thresh) {
-	//	struct list_item_struct *tempAnswerData = (struct list_item_struct*) malloc(
-	//			sizeof(struct list_item_struct) * TOTAL_QUESTIONS_ITEMS);
-
-	for (int i = 0; i < (TOTAL_QUESTIONS_ITEMS / 4); i++) {
+	for (int i = 0; i < TOTAL_QUESTIONS_ITEMS; i++) {
 		int pixelCnt[] = { 0, 0, 0, 0 };
 
 		for (int j = 0; j < 4; j++) {
@@ -354,7 +353,7 @@ int getWhitePixelsInBlob(Mat imgToProcess, Point2f pt, int radius) {
 	for (int i = (centerX - radius); i < (centerX + radius); i++) {
 		for (int j = (centerY - radius); j < (centerY + radius); j++) {
 			if ((j < imgToProcess.rows) && (i < imgToProcess.cols)) {
-				double val = imgToProcess.at<cv::Vec3b> (j, i)[0];
+				uchar val = imgToProcess.at<uchar>(j, i);
 
 				if (val == 255) {
 					cntOfWhite++;
