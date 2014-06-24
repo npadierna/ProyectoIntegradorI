@@ -14,6 +14,7 @@ import org.opencv.core.MatOfKeyPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.features2d.DMatch;
 import org.opencv.features2d.DescriptorExtractor;
 import org.opencv.features2d.DescriptorMatcher;
@@ -21,7 +22,10 @@ import org.opencv.features2d.FeatureDetector;
 import org.opencv.features2d.Features2d;
 import org.opencv.features2d.KeyPoint;
 import org.opencv.highgui.Highgui;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
+
+import co.edu.udea.omrgrader.model.session.QuestionItem;
 
 public class ImageProcesor {
 
@@ -38,87 +42,86 @@ public class ImageProcesor {
 		return instance;
 	}
 
-	public void executeProcessing(String referenceImage, String studentImage) {
+	public void executeProcessing(String refer_path, String solu_path,
+			String processedImageDirectory, String blackWhiteImageDirectory) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		Mat referenceMat = Highgui.imread(referenceImage,
+
+		Mat image_refer = Highgui.imread(refer_path,
 				Highgui.CV_LOAD_IMAGE_GRAYSCALE);
-		Mat studentMat = Highgui.imread(studentImage,
+		Mat image_solu = Highgui.imread(solu_path,
 				Highgui.CV_LOAD_IMAGE_GRAYSCALE);
 
 		/* 1 Detectando los puntos */
-		FeatureDetector featureDetector = FeatureDetector
+		FeatureDetector surfDetector = FeatureDetector
 				.create(FeatureDetector.SURF);
 
-		MatOfKeyPoint referenceOfKeyPoint = new MatOfKeyPoint();
-		MatOfKeyPoint studentOfKeyPoint = new MatOfKeyPoint();
+		MatOfKeyPoint keyPoints_ref = new MatOfKeyPoint();
+		MatOfKeyPoint keyPoints_solu = new MatOfKeyPoint();
 
-		featureDetector.detect(referenceMat, referenceOfKeyPoint);
-		featureDetector.detect(studentMat, studentOfKeyPoint);
+		surfDetector.detect(image_refer, keyPoints_ref);
+		surfDetector.detect(image_solu, keyPoints_solu);
 
 		/* 2 Creando los descriptores */
-		DescriptorExtractor descriptorExtractor = DescriptorExtractor
+		DescriptorExtractor surfExtractor = DescriptorExtractor
 				.create(DescriptorExtractor.SURF);
 
-		Mat referenceDescriptorMat = new Mat();
-		Mat studentDescriptorMat = new Mat();
+		Mat descriptors_ref = new Mat();
+		Mat descriptors_solu = new Mat();
 
-		descriptorExtractor.compute(referenceMat, referenceOfKeyPoint,
-				referenceDescriptorMat);
-		descriptorExtractor.compute(studentMat, studentOfKeyPoint,
-				studentDescriptorMat);
+		surfExtractor.compute(image_refer, keyPoints_ref, descriptors_ref);
+		surfExtractor.compute(image_solu, keyPoints_solu, descriptors_solu);
 
 		/* 3 Haciendo el Maching */
-		DescriptorMatcher descriptorMatcher = DescriptorMatcher
+		DescriptorMatcher matcher = DescriptorMatcher
 				.create(DescriptorMatcher.FLANNBASED);
 
 		MatOfDMatch matOfDMatch = new MatOfDMatch();
 
-		descriptorMatcher.match(referenceDescriptorMat, studentDescriptorMat,
-				matOfDMatch);
+		matcher.match(descriptors_ref, descriptors_solu, matOfDMatch);
 
-		double distance;
-		double maxDistance = 0.0;
-		double minDistance = 100.0;
-		List<DMatch> dMatchList = matOfDMatch.toList();
-		for (int row = 0; row < referenceDescriptorMat.rows(); row++) {
-			distance = dMatchList.get(row).distance;
+		double dist;
+		double max_dist = 0.0;
+		double min_dist = 100.0;
+		List<DMatch> matches = matOfDMatch.toList();
+		for (int row = 0; row < descriptors_ref.rows(); row++) {
+			dist = matches.get(row).distance;
 
-			if (distance < minDistance) {
-				minDistance = distance;
+			if (dist < min_dist) {
+				min_dist = dist;
 			}
 
-			if (distance > maxDistance) {
-				maxDistance = distance;
+			if (dist > max_dist) {
+				max_dist = dist;
 			}
 
 		}
 
-		List<DMatch> goodDMatchList = new ArrayList<DMatch>();
-		for (int row = 0; row < referenceDescriptorMat.rows(); row++) {
-			if (dMatchList.get(row).distance < 2.0 * (minDistance + 0.001)) {
-				goodDMatchList.add(dMatchList.get(row));
+		List<DMatch> good_matches = new ArrayList<DMatch>();
+		for (int row = 0; row < descriptors_ref.rows(); row++) {
+			if (matches.get(row).distance < 2.0 * (min_dist + 0.001)) {
+				good_matches.add(matches.get(row));
 			}
 		}
 
 		MatOfDMatch matOfDMatches = new MatOfDMatch(
-				goodDMatchList.toArray(new DMatch[goodDMatchList.size()]));
+				good_matches.toArray(new DMatch[good_matches.size()]));
 		Mat img_matches = new Mat();
 
-		Features2d.drawMatches(referenceMat, referenceOfKeyPoint, studentMat,
-				studentOfKeyPoint, matOfDMatches, img_matches,
-				Scalar.all(-1.0), Scalar.all(-1.0), new MatOfByte(),
+		Features2d.drawMatches(image_refer, keyPoints_ref, image_solu,
+				keyPoints_solu, matOfDMatches, img_matches, Scalar.all(-1.0),
+				Scalar.all(-1.0), new MatOfByte(),
 				Features2d.NOT_DRAW_SINGLE_POINTS);
 
 		List<Point> refer = new ArrayList<Point>();
-		List<KeyPoint> keyPointsList_ref = referenceOfKeyPoint.toList();
+		List<KeyPoint> keyPointsList_ref = keyPoints_ref.toList();
 
 		List<Point> solu = new ArrayList<Point>();
-		List<KeyPoint> keyPointList_solu = studentOfKeyPoint.toList();
+		List<KeyPoint> keyPointList_solu = keyPoints_solu.toList();
 
-		for (int i = 0; i < goodDMatchList.size(); i++) {
-			refer.add(keyPointsList_ref.get(goodDMatchList.get(i).queryIdx).pt);
-			solu.add(keyPointList_solu.get(goodDMatchList.get(i).trainIdx).pt);
+		for (int i = 0; i < good_matches.size(); i++) {
+			refer.add(keyPointsList_ref.get(good_matches.get(i).queryIdx).pt);
+			solu.add(keyPointList_solu.get(good_matches.get(i).trainIdx).pt);
 		}
 
 		MatOfPoint2f matOfPoint2f_refer = new MatOfPoint2f(
@@ -132,10 +135,9 @@ public class ImageProcesor {
 		List<Point> corners_solu = new ArrayList<Point>();
 
 		corners_template.add(new Point(0.0, 0.0));
-		corners_template.add(new Point(referenceMat.cols(), 0.0));
-		corners_template
-				.add(new Point(referenceMat.cols(), referenceMat.rows()));
-		corners_template.add(new Point(0.0, referenceMat.rows()));
+		corners_template.add(new Point(image_refer.cols(), 0.0));
+		corners_template.add(new Point(image_refer.cols(), image_refer.rows()));
+		corners_template.add(new Point(0.0, image_refer.rows()));
 
 		Mat corners_tem_mat = Converters
 				.vector_Point2d_to_Mat(corners_template);
@@ -161,6 +163,10 @@ public class ImageProcesor {
 						corners_solu.get(0).y), new Scalar(0, 255, 0), 4);
 
 		List<Point> center_locations = new ArrayList<Point>();
+		// List<Integer> yCoordinatesList = new
+		// ArrayList<Integer>(Arrays.asList(
+		// 168, 196, 223, 251, 278, 305, 333, 360, 388, 416, 443, 471,
+		// 498, 526, 554));
 		List<Integer> y_cor = new ArrayList<Integer>(
 				Arrays.asList(294, 333, 372, 411, 450, 489, 528, 567, 606, 645,
 						684, 723, 762, 801, 840));
@@ -197,11 +203,104 @@ public class ImageProcesor {
 							.get(counter).y), 3, new Scalar(0, 0, 255), -1);
 		}
 
-		/* Guardar las imagenes */
-		File file = new File(
-				"C:\\Users\\Andersson\\Desktop\\Temporales\\ImageOpenCV\\Output\\OMRJavaImage.png");
-		Highgui.imwrite(file.toString(), img_matches);
+		// 439 - Auto_grader.java
+		// FIXME: This String must be fixed.
+		String computedAnsweredPhotodPath = this.writePhotoFile(
+				"examForProcessing-Processed.png", img_matches, new File(
+						processedImageDirectory));
+
+		Mat imageSolutionMat = this.convertImageToBlackWhite(image_solu,
+				"examForProcessing-BlackAndWhite.png", new File(
+						blackWhiteImageDirectory), false);
+
+		List<QuestionItem> questionItemsList = this.getAnswers(
+				imageSolutionMat, center_locations_t, 10);
 
 	}
 
+	private List<QuestionItem> getAnswers(Mat imageToProcessMat,
+			List<Point> pointsList, int radius) {
+		int thresh = 150;
+		List<QuestionItem> answersList = new ArrayList<QuestionItem>();
+
+		for (int i = 0; i < (pointsList.size() / 4); i++) {
+			boolean[] answers = new boolean[4];
+			int[] pixelCounter = new int[4];
+			StringBuilder stringBuilder = new StringBuilder();
+
+			for (int j = 0; j < 4; j++) {
+				int position = i * 4 + j;
+				Point point = pointsList.get(position);
+
+				pixelCounter[j] = this.getWhitePixelsInCircle(
+						imageToProcessMat, point, radius);
+				stringBuilder.append(pixelCounter[j]).append(" ");
+
+				answers[j] = pixelCounter[j] > thresh;
+			}
+
+			answersList.add(new QuestionItem((short) (i + 1), answers));
+			writeForConsole(answers, (i + 1));
+		}
+
+		return (answersList);
+	}
+
+	private int getWhitePixelsInCircle(Mat imageToProcessMat,
+			Point currentPoint, int radius) {
+		int centerAtX = (int) currentPoint.x;
+		int centerAtY = (int) currentPoint.y;
+		int amoutOfWhitePixeles = 0;
+
+		for (int column = (centerAtX - radius); column < (centerAtX + radius); column++) {
+			for (int row = (centerAtY - radius); row < (centerAtY + radius); row++) {
+				if ((row < imageToProcessMat.height())
+						&& (column <= imageToProcessMat.width())) {
+					double valueOfPixel = imageToProcessMat.get(row, column)[0];
+
+					if (valueOfPixel == 255.0) {
+						amoutOfWhitePixeles++;
+					}
+				}
+			}
+		}
+
+		return (amoutOfWhitePixeles);
+	}
+
+	private Mat convertImageToBlackWhite(Mat imageMat, String filePhotoName,
+			File directoryFile, boolean applyGaussBlur) {
+		Mat imageInGrayMat = imageMat.clone();
+
+		if (applyGaussBlur) {
+			Imgproc.GaussianBlur(imageInGrayMat, imageInGrayMat,
+					new Size(3, 3), 0, 0);
+		}
+
+		double thresh = Imgproc.threshold(imageInGrayMat, imageInGrayMat, 0,
+				255, Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+
+		Imgproc.threshold(imageInGrayMat, imageInGrayMat, thresh, 255,
+				Imgproc.THRESH_BINARY_INV);
+
+		this.writePhotoFile(filePhotoName, imageInGrayMat, directoryFile);
+
+		return (imageInGrayMat);
+	}
+
+	private String writePhotoFile(String filePhotoName, Mat imageMat,
+			File directoryFile) {
+		File file = new File(directoryFile, filePhotoName);
+
+		filePhotoName = file.toString();
+		Highgui.imwrite(filePhotoName, imageMat);
+
+		return (filePhotoName);
+	}
+
+	private void writeForConsole(boolean answer[], int i) {
+		System.out.printf("%s%d [%b, %b, %b, %b]\n", "Question #", i, answer[0],
+				answer[1], answer[2], answer[3]);
+
+	}
 }
