@@ -22,8 +22,14 @@ struct list_item_struct {
 	bool choiceD;
 };
 
-void getAnswers(Mat, vector<Point2f> , struct list_item_struct *,
-		int, int);
+vector<Point2f> buildBubblesCenterLocations();
+
+Mat drawTransferredBubbles(Mat, vector<Point2f> , Scalar, int, int);
+
+Mat drawTransferredSquare(Mat, vector<KeyPoint> , Mat, vector<KeyPoint> ,
+		vector<DMatch> , Scalar, Scalar, vector<Point2f> );
+
+void getAnswers(Mat, vector<Point2f> , struct list_item_struct *, int, int);
 
 int getWhitePixelsInBlob(Mat, Point2f, int);
 
