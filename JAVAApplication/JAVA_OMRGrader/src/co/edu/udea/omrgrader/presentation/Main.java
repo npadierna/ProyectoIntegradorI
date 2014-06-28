@@ -1,34 +1,22 @@
 package co.edu.udea.omrgrader.presentation;
 
-import java.io.IOException;
-import java.util.Properties;
-import co.edu.udea.omrgrader.model.imageprocesor.impl.OMRProcess;
+import co.edu.udea.omrgrader.model.imageprocesor.ImageProcesor;
 
 public class Main {
-
+	private static String refer_path = "C:\\Users\\lis\\Desktop\\Miguel\\ImagesOMR\\only_logos_template.png";
+	private static String solu_path = "C:\\Users\\lis\\Desktop\\Miguel\\ImagesOMR\\real.jpg";
+	private static String processedImageDirectory = "C:\\Users\\lis\\Desktop\\Miguel\\ImagesOMR\\";
+	private static String blackWhiteImageDirectory = "C:\\Users\\lis\\Desktop\\Miguel\\ImagesOMR\\";
+	
 	public Main() {
 		super();
 	}
 
 	public static void main(String[] args) {
-		Properties constants = new Properties();
-		try {
-			constants.load(Main.class.getClassLoader().getResourceAsStream(
-					"co/edu/udea/omrgrader/model/util/constants.properties"));
-		} catch (IOException e) {
-			System.out.println("Error al leer archivo de propiedades");
-			e.printStackTrace();
-		}
-
-		if (!constants.isEmpty()) {
-			OMRProcess.getInstance().executeProcessing(
-					constants.getProperty("refer_path"),
-					constants.getProperty("solu_path"),
-					constants.getProperty("processedImageDirectory"),
-					constants.getProperty("blackWhiteImageDirectory"));
-
-		} else {
-			System.out.println("Propiedades vacias");
-		}
+		// TODO Auto-generated method stub
+		ImageProcesor.getInstance()
+				.executeProcessing(refer_path, solu_path,
+						processedImageDirectory, blackWhiteImageDirectory);
 	}
+
 }
