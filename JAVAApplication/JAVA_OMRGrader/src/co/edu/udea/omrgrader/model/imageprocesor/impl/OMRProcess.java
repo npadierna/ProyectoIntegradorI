@@ -2,7 +2,6 @@ package co.edu.udea.omrgrader.model.imageprocesor.impl;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.opencv.calib3d.Calib3d;
@@ -25,17 +24,18 @@ import org.opencv.utils.Converters;
 
 import co.edu.udea.omrgrader.model.imageprocesor.IOMRProcess;
 import co.edu.udea.omrgrader.model.session.QuestionItem;
+import co.edu.udea.omrgrader.presentation.WindowJDialog;
 
 public class OMRProcess implements IOMRProcess {
 
 	private static OMRProcess instance = null;
 	private ImageProcess imageProcess = null;
-	private ExamProcess examprocess = null;
+	private ExamProcess examProcess = null;
 
 	private OMRProcess() {
 		super();
 		imageProcess = new ImageProcess();
-		examprocess = new ExamProcess();
+		examProcess = new ExamProcess();
 	}
 
 	public static OMRProcess getInstance() {
@@ -47,7 +47,8 @@ public class OMRProcess implements IOMRProcess {
 
 	@Override
 	public void executeProcessing(String refer_path, String solu_path,
-			String processedImageDirectory, String blackWhiteImageDirectory) {
+			String processedImageDirectory, String blackWhiteImageDirectory,
+			String imageProcessedName, String imageBlackAndWhiteName) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
@@ -81,7 +82,6 @@ public class OMRProcess implements IOMRProcess {
 				.create(DescriptorMatcher.FLANNBASED);
 
 		MatOfDMatch matOfDMatch = new MatOfDMatch();
-
 		matcher.match(descriptors_ref, descriptors_solu, matOfDMatch);
 
 		double dist;
@@ -98,7 +98,6 @@ public class OMRProcess implements IOMRProcess {
 			if (dist > max_dist) {
 				max_dist = dist;
 			}
-
 		}
 
 		List<DMatch> good_matches = new ArrayList<DMatch>();
@@ -110,12 +109,6 @@ public class OMRProcess implements IOMRProcess {
 
 		MatOfDMatch matOfDMatches = new MatOfDMatch(
 				good_matches.toArray(new DMatch[good_matches.size()]));
-		Mat img_matches = new Mat();
-
-		Features2d.drawMatches(image_refer, keyPoints_ref, image_solu,
-				keyPoints_solu, matOfDMatches, img_matches, Scalar.all(-1.0),
-				Scalar.all(-1.0), new MatOfByte(),
-				Features2d.NOT_DRAW_SINGLE_POINTS);
 
 		List<Point> refer = new ArrayList<Point>();
 		List<KeyPoint> keyPointsList_ref = keyPoints_ref.toList();
@@ -149,45 +142,16 @@ public class OMRProcess implements IOMRProcess {
 		Core.perspectiveTransform(corners_tem_mat, corners_sol_mat, H);
 		Converters.Mat_to_vector_Point2d(corners_sol_mat, corners_solu);
 
-		Core.line(img_matches, new Point(corners_solu.get(0).x
-				+ corners_template.get(1).x, corners_solu.get(0).y),
-				new Point(corners_solu.get(1).x + corners_template.get(1).x,
-						corners_solu.get(1).y), new Scalar(0, 255, 0), 4);
-		Core.line(img_matches, new Point(corners_solu.get(1).x
-				+ corners_template.get(1).x, corners_solu.get(1).y),
-				new Point(corners_solu.get(2).x + corners_template.get(1).x,
-						corners_solu.get(2).y), new Scalar(0, 255, 0), 4);
-		Core.line(img_matches, new Point(corners_solu.get(2).x
-				+ corners_template.get(1).x, corners_solu.get(2).y),
-				new Point(corners_solu.get(3).x + corners_template.get(1).x,
-						corners_solu.get(3).y), new Scalar(0, 255, 0), 4);
-		Core.line(img_matches, new Point(corners_solu.get(3).x
-				+ corners_template.get(1).x, corners_solu.get(3).y),
-				new Point(corners_solu.get(0).x + corners_template.get(1).x,
-						corners_solu.get(0).y), new Scalar(0, 255, 0), 4);
+		Mat img_matches = new Mat();
+		Features2d.drawMatches(image_refer, keyPoints_ref, image_solu,
+				keyPoints_solu, matOfDMatches, img_matches, Scalar.all(-1.0),
+				Scalar.all(-1.0), new MatOfByte(),
+				Features2d.NOT_DRAW_SINGLE_POINTS);
+		this.examProcess.drawTransferredSquare(img_matches, new Scalar(0, 255,
+				0), corners_solu, corners_template);
 
-		List<Point> center_locations = new ArrayList<Point>();
-		// List<Integer> yCoordinatesList = new
-		// ArrayList<Integer>(Arrays.asList(
-		// 168, 196, 223, 251, 278, 305, 333, 360, 388, 416, 443, 471,
-		// 498, 526, 554));
-		List<Integer> y_cor = new ArrayList<Integer>(
-				Arrays.asList(294, 333, 372, 411, 450, 489, 528, 567, 606, 645,
-						684, 723, 762, 801, 840));
-
-		for (int row = 0; row < 15; row++) {
-			center_locations.add(new Point(168, y_cor.get(row)));
-			center_locations.add(new Point(210, y_cor.get(row)));
-			center_locations.add(new Point(252, y_cor.get(row)));
-			center_locations.add(new Point(294, y_cor.get(row)));
-		}
-
-		for (int row = 0; row < 15; row++) {
-			center_locations.add(new Point(521, y_cor.get(row)));
-			center_locations.add(new Point(563, y_cor.get(row)));
-			center_locations.add(new Point(605, y_cor.get(row)));
-			center_locations.add(new Point(647, y_cor.get(row)));
-		}
+		List<Point> center_locations = this.examProcess
+				.buildBubblesCenterLocations();
 
 		Mat center_locations_mat = Converters
 				.vector_Point2d_to_Mat(center_locations);
@@ -199,26 +163,27 @@ public class OMRProcess implements IOMRProcess {
 		Converters.Mat_to_vector_Point2d(center_locations_transfered,
 				center_locations_t);
 
-		for (int counter = 0; counter < center_locations_t.size(); counter++) {
-			Core.circle(
-					img_matches,
-					new Point(center_locations_t.get(counter).x
-							+ corners_template.get(1).x, center_locations_t
-							.get(counter).y), 3, new Scalar(0, 0, 255), -1);
-		}
+		this.examProcess.drawTransferredBubbles(img_matches,
+				center_locations_t, corners_template, new Scalar(0, 0, 255), 2,
+				11);
 
-		// 439 - Auto_grader.java
-		// FIXME: This String must be fixed.
 		String computedAnsweredPhotodPath = imageProcess.writePhotoFile(
-				"examForProcessing-Processed.png", img_matches, new File(
+				imageProcessedName, img_matches, new File(
 						processedImageDirectory));
 
-		Mat imageSolutionMat = imageProcess.convertImageToBlackWhite(image_solu,
-				"examForProcessing-BlackAndWhite.png", new File(
-						blackWhiteImageDirectory), false);
+		Mat blackAndWhiteImage = imageProcess.convertImageToBlackWhite(
+				image_solu, false);
+		String blackAndWhitePhotodPath = imageProcess.writePhotoFile(
+				imageBlackAndWhiteName, blackAndWhiteImage, new File(
+						blackWhiteImageDirectory));
 
-		List<QuestionItem> questionItemsList = examprocess.getAnswers(
-				imageSolutionMat, center_locations_t, 10);
+		List<QuestionItem> questionItemsList = examProcess.getAnswers(
+				blackAndWhiteImage, center_locations_t, 10);
+
+		new WindowJDialog(null, computedAnsweredPhotodPath,
+				"Homography and Matching Image", true).startWindow();
+
+		new WindowJDialog(null, blackAndWhitePhotodPath,
+				"Black And White Image", false).startWindow();
 	}
-
 }

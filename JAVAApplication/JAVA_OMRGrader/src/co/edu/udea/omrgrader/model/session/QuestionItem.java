@@ -2,8 +2,6 @@ package co.edu.udea.omrgrader.model.session;
 
 public class QuestionItem {
 
-	private static final long serialVersionUID = 1L;
-
 	private boolean choises[];
 	private short id;
 
@@ -40,5 +38,4 @@ public class QuestionItem {
 
 		return (0);
 	}
-
 }

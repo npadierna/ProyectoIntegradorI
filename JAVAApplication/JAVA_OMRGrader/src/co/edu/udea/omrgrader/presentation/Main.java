@@ -16,19 +16,25 @@ public class Main {
 			constants.load(Main.class.getClassLoader().getResourceAsStream(
 					"co/edu/udea/omrgrader/model/util/constants.properties"));
 		} catch (IOException e) {
-			System.out.println("Error al leer archivo de propiedades");
+			System.out.println("Error al leer archivo de propiedades.");
 			e.printStackTrace();
 		}
 
 		if (!constants.isEmpty()) {
-			OMRProcess.getInstance().executeProcessing(
-					constants.getProperty("refer_path"),
-					constants.getProperty("solu_path"),
-					constants.getProperty("processedImageDirectory"),
-					constants.getProperty("blackWhiteImageDirectory"));
+			OMRProcess
+					.getInstance()
+					.executeProcessing(
+							constants.getProperty("refer_path"),
+							constants.getProperty("solu_path"),
+							constants.getProperty("processedImageDirectory"),
+							constants.getProperty("blackWhiteImageDirectory"),
+							constants
+									.getProperty("examForProcessingName-Processed"),
+							constants
+									.getProperty("examForProcessingName-BlackAndWhite"));
 
 		} else {
-			System.out.println("Propiedades vacias");
+			System.out.println("Propiedades vacías");
 		}
 	}
 }

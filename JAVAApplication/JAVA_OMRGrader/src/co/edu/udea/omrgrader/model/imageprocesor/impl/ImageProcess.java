@@ -1,17 +1,8 @@
 package co.edu.udea.omrgrader.model.imageprocesor.impl;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfByte;
 import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
@@ -25,8 +16,7 @@ public class ImageProcess implements IImageProcess {
 	}
 
 	@Override
-	public Mat convertImageToBlackWhite(Mat imageMat, String filePhotoName,
-			File directoryFile, boolean applyGaussBlur) {
+	public Mat convertImageToBlackWhite(Mat imageMat, boolean applyGaussBlur) {
 		Mat imageInGrayMat = imageMat.clone();
 
 		if (applyGaussBlur) {
@@ -39,8 +29,6 @@ public class ImageProcess implements IImageProcess {
 
 		Imgproc.threshold(imageInGrayMat, imageInGrayMat, thresh, 255,
 				Imgproc.THRESH_BINARY_INV);
-
-		this.writePhotoFile(filePhotoName, imageInGrayMat, directoryFile);
 
 		return (imageInGrayMat);
 	}
@@ -60,29 +48,5 @@ public class ImageProcess implements IImageProcess {
 	public void writeForConsole(boolean[] answer, int i) {
 		System.out.printf("%s%d [%b, %b, %b, %b]\n", "Question #", i,
 				answer[0], answer[1], answer[2], answer[3]);
-	}
-
-	public void showImage(Mat image) {
-		if (!image.empty()) {
-			Image imagenMostrar = converter(image);
-			int width = imagenMostrar.getWidth(null);
-			int height = imagenMostrar.getHeight(null);
-		}
-	}
-
-	private Image converter(Mat imagen) {
-		MatOfByte matOfByte = new MatOfByte();
-		Highgui.imencode(".png", imagen, matOfByte);
-
-		byte[] byteArray = matOfByte.toArray();
-		BufferedImage bufImage = null;
-
-		try {
-			InputStream in = new ByteArrayInputStream(byteArray);
-			bufImage = ImageIO.read(in);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return (Image) bufImage;
 	}
 }

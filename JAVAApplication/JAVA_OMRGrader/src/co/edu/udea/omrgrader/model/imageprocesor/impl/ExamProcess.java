@@ -3,14 +3,16 @@ package co.edu.udea.omrgrader.model.imageprocesor.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 
 import co.edu.udea.omrgrader.model.imageprocesor.IExamProcess;
 import co.edu.udea.omrgrader.model.session.QuestionItem;
 
 public class ExamProcess implements IExamProcess {
-	
+
 	public ExamProcess() {
 		super();
 	}
@@ -66,4 +68,65 @@ public class ExamProcess implements IExamProcess {
 		return (amoutOfWhitePixeles);
 	}
 
+	@Override
+	public List<Point> buildBubblesCenterLocations() {
+		List<Point> centerLocations = new ArrayList<Point>();
+		for (int row = 0; row < (TOTAL_QUESTIONS_ITEMS / 2); row++) {
+			centerLocations.add(new Point(x_cor.get(0), y_cor.get(row)));
+			centerLocations.add(new Point(x_cor.get(1), y_cor.get(row)));
+			centerLocations.add(new Point(x_cor.get(2), y_cor.get(row)));
+			centerLocations.add(new Point(x_cor.get(3), y_cor.get(row)));
+		}
+
+		for (int row = 0; row < (TOTAL_QUESTIONS_ITEMS / 2); row++) {
+			centerLocations.add(new Point(x_cor.get(4), y_cor.get(row)));
+			centerLocations.add(new Point(x_cor.get(5), y_cor.get(row)));
+			centerLocations.add(new Point(x_cor.get(6), y_cor.get(row)));
+			centerLocations.add(new Point(x_cor.get(7), y_cor.get(row)));
+		}
+
+		return centerLocations;
+	}
+
+	@Override
+	public void drawTransferredSquare(Mat imgMatches, Scalar lineColor,
+			List<Point> corners_solu, List<Point> corners_template) {
+
+		Core.line(imgMatches, new Point(corners_solu.get(0).x
+				+ corners_template.get(1).x, corners_solu.get(0).y),
+				new Point(corners_solu.get(1).x + corners_template.get(1).x,
+						corners_solu.get(1).y), lineColor, 4);
+		Core.line(imgMatches, new Point(corners_solu.get(1).x
+				+ corners_template.get(1).x, corners_solu.get(1).y),
+				new Point(corners_solu.get(2).x + corners_template.get(1).x,
+						corners_solu.get(2).y), lineColor, 4);
+		Core.line(imgMatches, new Point(corners_solu.get(2).x
+				+ corners_template.get(1).x, corners_solu.get(2).y),
+				new Point(corners_solu.get(3).x + corners_template.get(1).x,
+						corners_solu.get(3).y), lineColor, 4);
+		Core.line(imgMatches, new Point(corners_solu.get(3).x
+				+ corners_template.get(1).x, corners_solu.get(3).y),
+				new Point(corners_solu.get(0).x + corners_template.get(1).x,
+						corners_solu.get(0).y), lineColor, 4);
+	}
+
+	@Override
+	public void drawTransferredBubbles(Mat image,
+			List<Point> centerLocationsTransfered, List<Point> cornersTemplate,
+			Scalar bubbleColor, int innerCircleRadius, int outerCircleRadius) {
+
+		for (int counter = 0; counter < centerLocationsTransfered.size(); counter++) {
+			Core.circle(image,
+					new Point(centerLocationsTransfered.get(counter).x
+							+ cornersTemplate.get(1).x,
+							centerLocationsTransfered.get(counter).y),
+					innerCircleRadius, bubbleColor, -1);
+
+			Core.circle(image,
+					new Point(centerLocationsTransfered.get(counter).x
+							+ cornersTemplate.get(1).x,
+							centerLocationsTransfered.get(counter).y),
+					outerCircleRadius, bubbleColor);
+		}
+	}
 }
