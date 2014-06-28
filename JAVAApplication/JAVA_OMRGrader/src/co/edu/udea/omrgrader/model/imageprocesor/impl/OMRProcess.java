@@ -1,4 +1,4 @@
-package co.edu.udea.omrgrader.model.imageprocesor;
+package co.edu.udea.omrgrader.model.imageprocesor.impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +14,6 @@ import org.opencv.core.MatOfKeyPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
 import org.opencv.features2d.DMatch;
 import org.opencv.features2d.DescriptorExtractor;
 import org.opencv.features2d.DescriptorMatcher;
@@ -22,26 +21,31 @@ import org.opencv.features2d.FeatureDetector;
 import org.opencv.features2d.Features2d;
 import org.opencv.features2d.KeyPoint;
 import org.opencv.highgui.Highgui;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
 
+import co.edu.udea.omrgrader.model.imageprocesor.IOMRProcess;
 import co.edu.udea.omrgrader.model.session.QuestionItem;
 
-public class ImageProcesor {
+public class OMRProcess implements IOMRProcess {
 
-	private static ImageProcesor instance = null;
+	private static OMRProcess instance = null;
+	private ImageProcess imageProcess = null;
+	private ExamProcess examprocess = null;
 
-	private ImageProcesor() {
+	private OMRProcess() {
 		super();
+		imageProcess = new ImageProcess();
+		examprocess = new ExamProcess();
 	}
 
-	public static ImageProcesor getInstance() {
+	public static OMRProcess getInstance() {
 		if (instance == null) {
-			instance = new ImageProcesor();
+			instance = new OMRProcess();
 		}
 		return instance;
 	}
 
+	@Override
 	public void executeProcessing(String refer_path, String solu_path,
 			String processedImageDirectory, String blackWhiteImageDirectory) {
 
@@ -205,102 +209,16 @@ public class ImageProcesor {
 
 		// 439 - Auto_grader.java
 		// FIXME: This String must be fixed.
-		String computedAnsweredPhotodPath = this.writePhotoFile(
+		String computedAnsweredPhotodPath = imageProcess.writePhotoFile(
 				"examForProcessing-Processed.png", img_matches, new File(
 						processedImageDirectory));
 
-		Mat imageSolutionMat = this.convertImageToBlackWhite(image_solu,
+		Mat imageSolutionMat = imageProcess.convertImageToBlackWhite(image_solu,
 				"examForProcessing-BlackAndWhite.png", new File(
 						blackWhiteImageDirectory), false);
 
-		List<QuestionItem> questionItemsList = this.getAnswers(
+		List<QuestionItem> questionItemsList = examprocess.getAnswers(
 				imageSolutionMat, center_locations_t, 10);
-
 	}
 
-	private List<QuestionItem> getAnswers(Mat imageToProcessMat,
-			List<Point> pointsList, int radius) {
-		int thresh = 150;
-		List<QuestionItem> answersList = new ArrayList<QuestionItem>();
-
-		for (int i = 0; i < (pointsList.size() / 4); i++) {
-			boolean[] answers = new boolean[4];
-			int[] pixelCounter = new int[4];
-			StringBuilder stringBuilder = new StringBuilder();
-
-			for (int j = 0; j < 4; j++) {
-				int position = i * 4 + j;
-				Point point = pointsList.get(position);
-
-				pixelCounter[j] = this.getWhitePixelsInCircle(
-						imageToProcessMat, point, radius);
-				stringBuilder.append(pixelCounter[j]).append(" ");
-
-				answers[j] = pixelCounter[j] > thresh;
-			}
-
-			answersList.add(new QuestionItem((short) (i + 1), answers));
-			writeForConsole(answers, (i + 1));
-		}
-
-		return (answersList);
-	}
-
-	private int getWhitePixelsInCircle(Mat imageToProcessMat,
-			Point currentPoint, int radius) {
-		int centerAtX = (int) currentPoint.x;
-		int centerAtY = (int) currentPoint.y;
-		int amoutOfWhitePixeles = 0;
-
-		for (int column = (centerAtX - radius); column < (centerAtX + radius); column++) {
-			for (int row = (centerAtY - radius); row < (centerAtY + radius); row++) {
-				if ((row < imageToProcessMat.height())
-						&& (column <= imageToProcessMat.width())) {
-					double valueOfPixel = imageToProcessMat.get(row, column)[0];
-
-					if (valueOfPixel == 255.0) {
-						amoutOfWhitePixeles++;
-					}
-				}
-			}
-		}
-
-		return (amoutOfWhitePixeles);
-	}
-
-	private Mat convertImageToBlackWhite(Mat imageMat, String filePhotoName,
-			File directoryFile, boolean applyGaussBlur) {
-		Mat imageInGrayMat = imageMat.clone();
-
-		if (applyGaussBlur) {
-			Imgproc.GaussianBlur(imageInGrayMat, imageInGrayMat,
-					new Size(3, 3), 0, 0);
-		}
-
-		double thresh = Imgproc.threshold(imageInGrayMat, imageInGrayMat, 0,
-				255, Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
-
-		Imgproc.threshold(imageInGrayMat, imageInGrayMat, thresh, 255,
-				Imgproc.THRESH_BINARY_INV);
-
-		this.writePhotoFile(filePhotoName, imageInGrayMat, directoryFile);
-
-		return (imageInGrayMat);
-	}
-
-	private String writePhotoFile(String filePhotoName, Mat imageMat,
-			File directoryFile) {
-		File file = new File(directoryFile, filePhotoName);
-
-		filePhotoName = file.toString();
-		Highgui.imwrite(filePhotoName, imageMat);
-
-		return (filePhotoName);
-	}
-
-	private void writeForConsole(boolean answer[], int i) {
-		System.out.printf("%s%d [%b, %b, %b, %b]\n", "Question #", i, answer[0],
-				answer[1], answer[2], answer[3]);
-
-	}
 }
