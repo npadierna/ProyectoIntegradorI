@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".activity.exam.result.ExamResultListActivity" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/final_grade_message_margin_right_text_view"
+            android:gravity="center"
+            android:text="@string/final_grade_message_text_view"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/final_grade_value_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/final_grade_value_margin_left_text_view"
+            android:gravity="center"
+            android:text="@string/application_name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" >
+        </TextView>
+    </LinearLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/list_margin_top_exam_result_list_view" >
+    </ListView>
+
+</LinearLayout>

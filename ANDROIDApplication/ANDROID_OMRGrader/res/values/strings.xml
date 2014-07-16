@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base Album Directory -->
+    <string name="album_blackwhite_exams_name">black_white</string>
+    <string name="album_exams_name">exams</string>
+    <string name="album_processed_exams_name">processed</string>
+    <string name="album_root_name">OMRGrader</string>
+    <string name="album_references_name">references</string>
+    <string name="album_templates_name">templates</string>
+    <string name="album_temp_name">temp</string>
+    <string name="album_tests_name">tests</string>
+
+    <!-- Exam Result List Activity -->
+    <string name="exam_result_list_activity_name">Resultados Obtenidos</string>
+    <string name="final_grade_message_text_view">Nota Final:</string>
+
+    <string-array name="answers_options_text">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+    </string-array>
+
+    <!-- Global Application's Strings -->
+    <string name="accept_button">Aceptar</string>
+    <string name="application_name">OMR Grader</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="pictures_prefix">.jpg</string>
+
+    <!-- Input Reference Name Dialog Fragment -->
+    <string name="main_text_dialog_fragment">Por favor, ingrese el nombre con el cual desea guardar el exámen de Referencia:</string>
+    <string name="main_title_dialog_fragment">Ingresar Nombre</string>
+
+    <!-- Main Session Activity -->
+    <string name="new_grader_session_button">Calificar Nueva Sesión de Exámenes</string>
+    <string name="new_reference_template_button">Capturar Nuevo Exámen de Referencia</string>
+    <string name="no_reference_exam_taken_message_alert_dialog">No se ha podido procesar exitosamente la operación para tomar un nuevo exámen de referencia.\nPor favor, intente de nuevo.</string>
+    <string name="no_reference_exam_taken_title_alert_dialog">Toma de Exámen Falalda</string>
+
+    <!-- Reference Exam List Activity -->
+    <string name="empty_reference_exam_list">No Hay Exámenes de Referencia</string>
+    <string name="error_founding_reference_exams_message_alert_dialog">Un error ha surgido mientras se consultaban los Exámenes de Referencia guardados previamente.\nPor favor, intente de nuevo.</string>
+    <string name="error_founding_reference_exams_title_alert_dialog">Error Recuperando Exámenes</string>
+    <string name="header_title_description">Por favor, seleccione alguno de los elementos de la lista:</string>
+    <string name="reference_exam_list_activity_name">Exámenes de Referencia</string>
+
+    <!-- Starter Configuration Activity -->
+    <string name="no_cameras_message_alert_dialog">No hay ninguna aplicación de Cámara instalada en el sistema.\n\nLa aplicación se cerrará.</string>
+    <string name="no_cameras_title_alert_dialog">Sin Cámara</string>
+    <string name="no_copied_resources_message_alert_dialog">No se han podido copiar al dispositivo todos los recursos necesarios para el funcionamiento del aplicativo.\n\nLa aplicación se cerrará.</string>
+    <string name="no_copied_resources_title_alert_dialog">Recursos No Copiados</string>
+    <string name="no_created_directories_message_alert_dialog">No se han podido crear los directorios necesarios.\n\nLa aplicación se cerrará.</string>
+    <string name="no_created_directories_title_alert_dialog">Problema en Directorios</string>
+    <string name="no_found_libraries_message_alert_dialog">No se han encontrado los recursos necesarios de OpenCV para el funcionamiento del aplicativo.\n\nLa aplicación se cerrará.</string>
+    <string name="no_found_libraries_title_alert_dialog">Sin Librerías OpenCV</string>
+
+    <!-- Student Exam Taker Activity -->
+    <string name="picture_taker_text_alert_dialog">¿Desea seguir capturando exámenes de estudiantes?</string>
+    <string name="picture_taker_title_alert_dialog">¿Seguir Capturando?</string>
+
+</resources>

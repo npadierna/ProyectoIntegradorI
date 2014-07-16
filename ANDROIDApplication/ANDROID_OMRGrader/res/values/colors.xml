@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Exam Result List Activity -->
+    <color name="correct_answer_background_text_view">#00FF00</color>
+    <color name="wrong_answer_background_text_view">#FF0000</color>
+
+    <!-- Main Session Activity -->
+    <color name="main_session_text_color_button">#000000</color>
+
+</resources>
