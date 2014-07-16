@@ -29,6 +29,13 @@
     <string name="cancel_button">Cancelar</string>
     <string name="pictures_prefix">.jpg</string>
 
+    <!-- Grader Settings Preference Activity -->
+    <string name="grader_settings_preference_activity_name">Configuración de Calificación</string>
+    <string name="grader_settings_preference_maximum_grade_dialog_message">Digite el nuevo valor que desea para el máximo valor de la Nota al instante de efectuar la calificación:</string>
+    <string name="grader_settings_preference_maximum_grade_dialog_title">Máximo Valor de Nota</string>
+    <string name="grader_settings_preference_maximum_grade_summary">Valor máximo para la nota o resultado establecido para la calificación.</string>
+    <string name="grader_settings_preference_maximum_grade_title">Máximo Valor de Nota</string>
+
     <!-- Input Reference Name Dialog Fragment -->
     <string name="main_text_dialog_fragment">Por favor, ingrese el nombre con el cual desea guardar el exámen de Referencia:</string>
     <string name="main_title_dialog_fragment">Ingresar Nombre</string>
@@ -38,6 +45,10 @@
     <string name="new_reference_template_button">Capturar Nuevo Exámen de Referencia</string>
     <string name="no_reference_exam_taken_message_alert_dialog">No se ha podido procesar exitosamente la operación para tomar un nuevo exámen de referencia.\nPor favor, intente de nuevo.</string>
     <string name="no_reference_exam_taken_title_alert_dialog">Toma de Exámen Falalda</string>
+
+    <!-- Menu Main Session Activity -->
+    <string name="about_us_main_session_menu_item">Acerca de Nosotros</string>
+    <string name="grader_settings_main_session_menu_item">Configuración</string>
 
     <!-- Reference Exam List Activity -->
     <string name="empty_reference_exam_list">No Hay Exámenes de Referencia</string>
@@ -56,8 +67,6 @@
     <string name="no_found_libraries_message_alert_dialog">No se han encontrado los recursos necesarios de OpenCV para el funcionamiento del aplicativo.\n\nLa aplicación se cerrará.</string>
     <string name="no_found_libraries_title_alert_dialog">Sin Librerías OpenCV</string>
 
-    <!-- Student Exam Taker Activity -->
-    <string name="picture_taker_text_alert_dialog">¿Desea seguir capturando exámenes de estudiantes?</string>
-    <string name="picture_taker_title_alert_dialog">¿Seguir Capturando?</string>
+    <!-- Student Exam Catcher Activity -->
 
 </resources>

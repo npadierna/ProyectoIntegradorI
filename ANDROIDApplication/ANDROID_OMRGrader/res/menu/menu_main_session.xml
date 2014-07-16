@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/grader_settings_main_session_menu_item"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/grader_settings_main_session_menu_item">
+    </item>
+    <item
+        android:id="@+id/about_us_main_session_menu_item"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:orderInCategory="200"
+        android:showAsAction="never"
+        android:title="@string/about_us_main_session_menu_item">
+    </item>
+
+</menu>

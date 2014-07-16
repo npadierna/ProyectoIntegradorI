@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/id_answer_option_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="1"
+        android:textAppearance="?android:attr/textAppearanceMedium" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/first_answer_option_text_view"
+        style="@style/QuestionOptionTextViewTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="A" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/second_answer_option_text_view"
+        style="@style/QuestionOptionTextViewTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="B" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/third_answer_option_text_view"
+        style="@style/QuestionOptionTextViewTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="C" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/fourth_answer_option_text_view"
+        style="@style/QuestionOptionTextViewTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="D" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/fifth_answer_option_text_view"
+        style="@style/QuestionOptionTextViewTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="E" >
+    </TextView>
+
+</LinearLayout>

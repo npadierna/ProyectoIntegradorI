@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import co.edu.udea.android.omrgrader.imageprocess.ImageProcessor;
+import co.edu.udea.android.omrgrader.imageprocess.OMRGraderProcess;
 import co.edu.udea.android.omrgrader.imageprocess.model.QuestionItem;
 
 /**
@@ -34,8 +34,10 @@ public class ProcessorAsyncTask extends
 				}
 			}
 
-			return (new ImageProcessor().executeProcessing((String) args[0],
-					(String) args[1], (String) args[2], (String) args[3]));
+			// FIXME: We need to improve this.
+			// return (OMRGraderProcess.getInstance().executeProcessing(
+			// (String) args[0], (String) args[1], (String) args[2],
+			// (String) args[3]));
 		}
 
 		return (null);

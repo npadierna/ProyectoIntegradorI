@@ -14,33 +14,34 @@ import android.os.Parcelable;
 public final class QuestionItem implements Parcelable, Serializable {
 
 	private static final long serialVersionUID = 8772507323900628318L;
-	private boolean choises[];
+
+	private boolean questionsOptionsChosen[];
 	private short id;
 
-	public QuestionItem(short id, boolean[] choises) {
+	public QuestionItem(short id, boolean[] questionsOptionsChosen) {
 		super();
 
-		this.setChoises(choises);
+		this.setQuestionsOptionsChosen(questionsOptionsChosen);
 		this.setId(id);
 	}
 
 	public QuestionItem(Parcel parcel) {
 		// DEBUGME: How does Parcel manage the Booleans Array?
-		boolean booleans[] = {};
+		boolean booleans[] = new boolean[] {};
 
 		parcel.readBooleanArray(booleans);
-		this.setChoises(booleans);
+		this.setQuestionsOptionsChosen(booleans);
 
 		this.setId((short) parcel.readInt());
 	}
 
-	public boolean[] getChoises() {
+	public boolean[] getQuestionsOptionsChosen() {
 
-		return (this.choises);
+		return (this.questionsOptionsChosen);
 	}
 
-	public void setChoises(boolean[] choises) {
-		this.choises = choises;
+	public void setQuestionsOptionsChosen(boolean[] choises) {
+		this.questionsOptionsChosen = choises;
 	}
 
 	public short getId() {
@@ -60,7 +61,7 @@ public final class QuestionItem implements Parcelable, Serializable {
 
 	@Override()
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeBooleanArray(this.getChoises());
+		dest.writeBooleanArray(this.getQuestionsOptionsChosen());
 		dest.writeInt(this.getId());
 	}
 

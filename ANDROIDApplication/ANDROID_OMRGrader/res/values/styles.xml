@@ -23,4 +23,11 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/main_session_text_size_button</item>
     </style>
+
+    <!-- Exam Result Question Option -->
+    <style name="QuestionOptionTextViewTheme" parent="AppBaseTheme">
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import co.edu.udea.android.omrgrader.R;
-import co.edu.udea.android.omrgrader.process.exam.ReferenceExamItem;
+import co.edu.udea.android.omrgrader.process.exam.model.ReferenceExamItem;
 
 /**
  * 

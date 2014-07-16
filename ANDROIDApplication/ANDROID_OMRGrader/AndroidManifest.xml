@@ -46,13 +46,18 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.exam.student.StudentExamTakerActivity"
+            android:name=".activity.exam.student.StudentExamCatcherActivity"
             android:label="@string/application_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.exam.result.ExamResultListActivity"
             android:label="@string/exam_result_list_activity_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.config.preference.GraderSettingsPreferenceActivity"
+            android:label="@string/grader_settings_preference_activity_name"
             android:screenOrientation="portrait" >
         </activity>
     </application>

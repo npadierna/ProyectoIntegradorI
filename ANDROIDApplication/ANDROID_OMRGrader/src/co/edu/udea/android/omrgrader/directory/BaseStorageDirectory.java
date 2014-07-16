@@ -27,14 +27,15 @@ public class BaseStorageDirectory {
 			.getSimpleName();
 
 	public static final String ONLY_LOGOS_PATH = "Only Logos Template Path";
-	private static final String SLASH = "/";
+	public static final String SLASH = "/";
 	private static final String SOURCE_ONLY_LOGOS_TEMPLATE_ROUTE = "images/template";
 
-	private Context context;
+	private static BaseStorageDirectory instance;
+
 	private File baseStorageDirectoryFile;
 	private Map<String, File> storageDirectoriesFilesMap;
 
-	private static BaseStorageDirectory instance;
+	private Context context;
 
 	private BaseStorageDirectory(Context context) {
 		super();
@@ -56,64 +57,6 @@ public class BaseStorageDirectory {
 	public Map<String, File> getStorageDirectoriesFilesMap() {
 
 		return (this.storageDirectoriesFilesMap);
-	}
-
-	public File copyBaseTemplateToDirectory() throws OMRGraderProcessException {
-		AssetManager assetManager = this.context.getAssets();
-		File outputFile = null;
-		InputStream inputStream = null;
-		String[] assetsFilesNames = null;
-
-		try {
-			assetsFilesNames = assetManager
-					.list(SOURCE_ONLY_LOGOS_TEMPLATE_ROUTE);
-			inputStream = assetManager.open(SOURCE_ONLY_LOGOS_TEMPLATE_ROUTE
-					+ SLASH + assetsFilesNames[0]);
-
-			File directoryFile = this.getStorageDirectoriesFilesMap().get(
-					this.context.getResources().getString(
-							R.string.album_templates_name));
-			outputFile = new File(directoryFile, assetsFilesNames[0]);
-
-			if (!outputFile.exists()) {
-				OutputStream outputStream = new FileOutputStream(outputFile);
-				int read = 0;
-				byte[] bytes = new byte[2048];
-				while ((read = inputStream.read(bytes)) != -1) {
-					outputStream.write(bytes, 0, read);
-				}
-
-				outputStream.flush();
-				outputStream.close();
-				inputStream.close();
-			}
-		} catch (IOException e) {
-			throw new OMRGraderProcessException(
-					"A grave error has occurred while the Only Logos Template was being copied to Storage Directory.",
-					e);
-		}
-
-		return (outputFile);
-	}
-
-	private void createBaseStorageDirectory() {
-		File storageDirectoryFile = null;
-
-		if (Environment.MEDIA_MOUNTED.equals(Environment
-				.getExternalStorageState())) {
-			storageDirectoryFile = this.buildStorageDirectory();
-
-			if (storageDirectoryFile == null) {
-				Log.e(TAG, "The storage directory could not be created.");
-			} else {
-				this.storageDirectoriesFilesMap.put(this.context.getResources()
-						.getString(R.string.album_root_name),
-						storageDirectoryFile);
-				this.baseStorageDirectoryFile = storageDirectoryFile;
-
-				this.createAllBaseDirectories();
-			}
-		}
 	}
 
 	private File buildStorageDirectory() {
@@ -218,5 +161,63 @@ public class BaseStorageDirectory {
 				.getString(R.string.album_processed_exams_name),
 				auxiliarInnerPathFile);
 		pathStringBuilder.delete(0, pathStringBuilder.length());
+	}
+
+	private void createBaseStorageDirectory() {
+		File storageDirectoryFile = null;
+
+		if (Environment.MEDIA_MOUNTED.equals(Environment
+				.getExternalStorageState())) {
+			storageDirectoryFile = this.buildStorageDirectory();
+
+			if (storageDirectoryFile == null) {
+				Log.e(TAG, "The storage directory could not be created.");
+			} else {
+				this.storageDirectoriesFilesMap.put(this.context.getResources()
+						.getString(R.string.album_root_name),
+						storageDirectoryFile);
+				this.baseStorageDirectoryFile = storageDirectoryFile;
+
+				this.createAllBaseDirectories();
+			}
+		}
+	}
+
+	public File copyBaseTemplateToDirectory() throws OMRGraderProcessException {
+		AssetManager assetManager = this.context.getAssets();
+		File outputFile = null;
+		InputStream inputStream = null;
+		String[] assetsFilesNames = null;
+
+		try {
+			assetsFilesNames = assetManager
+					.list(SOURCE_ONLY_LOGOS_TEMPLATE_ROUTE);
+			inputStream = assetManager.open(SOURCE_ONLY_LOGOS_TEMPLATE_ROUTE
+					+ SLASH + assetsFilesNames[0]);
+
+			File directoryFile = this.getStorageDirectoriesFilesMap().get(
+					this.context.getResources().getString(
+							R.string.album_templates_name));
+			outputFile = new File(directoryFile, assetsFilesNames[0]);
+
+			if (!outputFile.exists()) {
+				OutputStream outputStream = new FileOutputStream(outputFile);
+				int read = 0;
+				byte[] bytes = new byte[2048];
+				while ((read = inputStream.read(bytes)) != -1) {
+					outputStream.write(bytes, 0, read);
+				}
+
+				outputStream.flush();
+				outputStream.close();
+				inputStream.close();
+			}
+		} catch (IOException e) {
+			throw new OMRGraderProcessException(
+					"A grave error has occurred while the Only Logos Template was being copied to Storage Directory.",
+					e);
+		}
+
+		return (outputFile);
 	}
 }

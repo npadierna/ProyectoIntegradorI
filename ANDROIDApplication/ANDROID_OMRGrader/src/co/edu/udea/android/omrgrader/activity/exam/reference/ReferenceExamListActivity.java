@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,8 +14,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import co.edu.udea.android.omrgrader.R;
+import co.edu.udea.android.omrgrader.activity.exam.student.StudentExamCatcherActivity;
 import co.edu.udea.android.omrgrader.process.exam.ReferenceExamHelper;
-import co.edu.udea.android.omrgrader.process.exam.ReferenceExamItem;
+import co.edu.udea.android.omrgrader.process.exam.model.ReferenceExamItem;
 import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
 
 /**
@@ -30,9 +32,9 @@ public class ReferenceExamListActivity extends ListActivity {
 
 	private ReferenceExamHelper referenceExamHelper;
 
-	private AlertDialog.Builder alertDialogBuilder;
-
 	private List<ReferenceExamItem> referenceExamsItemsList;
+
+	private AlertDialog.Builder alertDialogBuilder;
 
 	@Override()
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class ReferenceExamListActivity extends ListActivity {
 
 		if (!this.referenceExamsItemsList.isEmpty()) {
 			ListAdapter referenceExamListAdapter = new ReferenceExamArrayAdapter(
-					this, R.layout.item_reference_exam_list,
+					this, R.layout.item_list_reference_exam,
 					this.referenceExamsItemsList);
 
 			ListView referenceExamsListView = (ListView) super
@@ -94,6 +96,20 @@ public class ReferenceExamListActivity extends ListActivity {
 		}
 	}
 
+	private void startStudentExamCatcherActivity(String referenceExamFullName) {
+		Log.v(TAG, "startStudentExamCatcherActivity(String):void");
+
+		String referenceExamAbsolutePath = this.referenceExamHelper
+				.obtainAbsolutePathForReferenceExam(referenceExamFullName);
+
+		Intent intent = new Intent(super.getApplicationContext(),
+				StudentExamCatcherActivity.class);
+		intent.putExtra(StudentExamCatcherActivity.REFERENCE_EXAM_PATH_KEY,
+				referenceExamAbsolutePath);
+
+		super.startActivity(intent);
+	}
+
 	private OnItemClickListener referenceExamListItemOnClickListener = new OnItemClickListener() {
 
 		@Override()
@@ -102,28 +118,8 @@ public class ReferenceExamListActivity extends ListActivity {
 			Log.v(TAG, String.format("Reference Examn Item Selected: %s",
 					referenceExamsItemsList.get(position).getFullName()));
 
-			startStudentTakingPictureActivity(referenceExamsItemsList.get(
+			startStudentExamCatcherActivity(referenceExamsItemsList.get(
 					position).getFullName());
 		}
 	};
-
-	private void startStudentTakingPictureActivity(String referenceExamName) {
-		// StringBuilder pathStringBuilder = new StringBuilder(
-		// baseStorageDirectory
-		// .getStorageDirectoriesFilesMap()
-		// .get(super.getResources().getString(
-		// R.string.album_exams_name)).getAbsolutePath());
-		//
-		// pathStringBuilder.append("/").append(referenceExamName);
-		//
-		// Log.v(TAG, "Full Absolute Path for Reference Exam: "
-		// + pathStringBuilder.toString());
-		//
-		// Intent intent = new Intent(super.getApplicationContext(),
-		// StudentExamTakerActivity.class);
-		// intent.putExtra(StudentExamTakerActivity.REFERENCE_EXAM_KEY,
-		// pathStringBuilder.toString());
-		//
-		// super.startActivity(intent);
-	}
 }

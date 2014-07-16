@@ -7,8 +7,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import co.edu.udea.android.omrgrader.R;
+import co.edu.udea.android.omrgrader.activity.config.preference.GraderSettingsPreferenceActivity;
 import co.edu.udea.android.omrgrader.activity.exam.reference.ReferenceExamListActivity;
 import co.edu.udea.android.omrgrader.process.exam.ReferenceExamHelper;
 import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
@@ -35,6 +38,30 @@ public class MainSessionActivity extends FragmentActivity {
 
 		this.createComponents();
 		this.createWidgetsComponents();
+	}
+
+	@Override()
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.getMenuInflater().inflate(R.menu.menu_main_session, menu);
+
+		return (true);
+	}
+
+	@Override()
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.about_us_main_session_menu_item:
+
+			return (true);
+
+		case R.id.grader_settings_main_session_menu_item:
+			super.startActivity(new Intent(super.getApplicationContext(),
+					GraderSettingsPreferenceActivity.class));
+
+			return (true);
+		}
+
+		return (false);
 	}
 
 	private void createComponents() {
@@ -75,7 +102,7 @@ public class MainSessionActivity extends FragmentActivity {
 		} else {
 			try {
 				this.referenceExamHelper
-						.createIntentForTakingPicture(referencePictureName
+						.createIntentForTakingReferenceExamPicture(referencePictureName
 								.trim());
 			} catch (OMRGraderProcessException e) {
 				(this.alertDialogBuilder.create()).show();

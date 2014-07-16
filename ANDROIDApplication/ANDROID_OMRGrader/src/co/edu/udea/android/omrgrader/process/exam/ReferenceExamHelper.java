@@ -6,11 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
 import co.edu.udea.android.omrgrader.R;
 import co.edu.udea.android.omrgrader.directory.BaseStorageDirectory;
+import co.edu.udea.android.omrgrader.process.exam.model.ReferenceExamItem;
 import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
 
 /**
@@ -19,55 +17,32 @@ import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException
  * @author Miguel &Aacute;ngel Ossa Ruiz
  * @author Neiber Padierna P&eacute;rez
  */
-public final class ReferenceExamHelper {
-
-	private Context context;
-
-	private BaseStorageDirectory baseStorageDirectory;
+public final class ReferenceExamHelper extends AbstractExamHelper {
 
 	public ReferenceExamHelper(Context context) {
-		super();
-
-		this.context = context;
-		this.baseStorageDirectory = BaseStorageDirectory
-				.getInstance(this.context);
+		super(context);
 	}
 
-	public void createIntentForTakingPicture(String referencePictureName)
-			throws OMRGraderProcessException {
-		File takenReferencePictureFile = null;
-		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+	public void createIntentForTakingReferenceExamPicture(
+			String referenceExamPictureName) throws OMRGraderProcessException {
+		File destinationDirectoryFile = super
+				.getBaseStorageDirectory()
+				.getStorageDirectoriesFilesMap()
+				.get(super.getContext().getResources()
+						.getString(R.string.album_exams_name));
 
-		File directoryFile = this.baseStorageDirectory
-				.getStorageDirectoriesFilesMap().get(
-						this.context.getResources().getString(
-								R.string.album_exams_name));
-		try {
-			takenReferencePictureFile = File
-					.createTempFile(
-							referencePictureName,
-							this.context.getResources().getString(
-									R.string.pictures_prefix), directoryFile);
-
-			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-					Uri.fromFile(takenReferencePictureFile));
-			takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-			this.context.startActivity(takePictureIntent);
-		} catch (Exception e) {
-			throw new OMRGraderProcessException(
-					"A exception has ocurred while the Camera Applications was being requested",
-					e);
-		}
+		super.createIntentForTakingPicture(referenceExamPictureName,
+				destinationDirectoryFile);
 	}
 
 	public List<ReferenceExamItem> findAllReferenceExamsItems()
 			throws OMRGraderProcessException {
 		try {
-			File referenceExamsDirectoryFile = this.baseStorageDirectory
-					.getStorageDirectoriesFilesMap().get(
-							this.context.getResources().getString(
-									R.string.album_exams_name));
+			File referenceExamsDirectoryFile = super
+					.getBaseStorageDirectory()
+					.getStorageDirectoriesFilesMap()
+					.get(super.getContext().getResources()
+							.getString(R.string.album_exams_name));
 			List<ReferenceExamItem> fileListItemList = new ArrayList<ReferenceExamItem>();
 
 			for (File file : referenceExamsDirectoryFile.listFiles()) {
@@ -81,5 +56,16 @@ public final class ReferenceExamHelper {
 					"A exception has ocurred while the application was recovering the References Exams",
 					e);
 		}
+	}
+
+	public String obtainAbsolutePathForReferenceExam(
+			String referenceExamFullName) {
+
+		return (super
+				.getBaseStorageDirectory()
+				.getStorageDirectoriesFilesMap()
+				.get(super.getContext().getResources()
+						.getString(R.string.album_exams_name))
+				+ BaseStorageDirectory.SLASH + referenceExamFullName);
 	}
 }

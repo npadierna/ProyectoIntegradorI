@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="question_item_bubble_radius_length">10</integer>
+    <integer name="question_item_bubble_thresh">150</integer>
+    <integer name="questions_items_columns_amount">2</integer>
+    <integer name="questions_options_amout">4</integer>
+
+    <integer-array name="bubles_x_coordinates">
+        <item>128</item>
+        <item>161</item>
+        <item>194</item>
+        <item>227</item>
+        <item>337</item>
+        <item>370</item>
+        <item>403</item>
+        <item>436</item>
+    </integer-array>
+    <integer-array name="bubbles_y_coordinates">
+        <item>193</item>
+        <item>223</item>
+        <item>253</item>
+        <item>283</item>
+        <item>313</item>
+        <item>343</item>
+        <item>373</item>
+        <item>403</item>
+        <item>433</item>
+        <item>463</item>
+        <item>493</item>
+        <item>523</item>
+        <item>553</item>
+        <item>583</item>
+        <item>613</item>
+    </integer-array>
+
+</resources>
