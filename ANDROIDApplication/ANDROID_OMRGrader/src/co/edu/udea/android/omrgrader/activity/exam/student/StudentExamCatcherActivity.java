@@ -2,11 +2,14 @@ package co.edu.udea.android.omrgrader.activity.exam.student;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import co.edu.udea.android.omrgrader.R;
+import co.edu.udea.android.omrgrader.process.exam.ExamGraderSession;
+import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
 
 /**
  * 
@@ -23,8 +26,12 @@ public class StudentExamCatcherActivity extends Activity {
 	private static final int TAKE_STUDENT_PICTURE_REQUEST = 1;
 
 	private String referenceExamAbsolutePath;
+	private String newStudentExamAbsolutePath;
+
+	private ExamGraderSession examGraderSession;
 
 	private AlertDialog.Builder alertDialogBuilder;
+	private ProgressDialog progressDialog;
 
 	@Override()
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,49 @@ public class StudentExamCatcherActivity extends Activity {
 
 		this.createWidgetsComponents();
 		this.extractValuesFromBundle(super.getIntent().getExtras());
+		this.createComponents();
+	}
+
+	@Override()
+	protected void onStart() {
+		super.onStart();
+
+		this.examGraderSession
+				.getGraderSession()
+				.getReferenceExam()
+				.setPictureAbsolutePath(
+						"/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG");
+		try {
+			this.progressDialog.setMessage(super
+					.getString(R.string.application_name));
+			this.progressDialog.setTitle(super
+					.getString(R.string.application_name));
+
+			this.examGraderSession.computeReferenceExam(this.progressDialog);
+		} catch (OMRGraderProcessException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void createComponents() {
+		Log.v(TAG, "createComponents():void");
+
+		this.examGraderSession = new ExamGraderSession(
+				super.getApplicationContext(), this.referenceExamAbsolutePath,
+				super.getResources().getInteger(
+						R.integer.questions_options_amout), super
+						.getResources().getInteger(
+								R.integer.question_item_bubble_radius_length),
+				super.getResources().getInteger(
+						R.integer.question_item_bubble_thresh));
+		this.examGraderSession
+				.buildBubblesCenterCoordinates(
+						super.getResources().getIntArray(
+								R.array.bubbles_x_coordinates),
+						super.getResources().getIntArray(
+								R.array.bubbles_y_coordinates),
+						super.getResources().getInteger(
+								R.integer.questions_items_columns_amount));
 	}
 
 	private void createWidgetsComponents() {
@@ -47,6 +97,10 @@ public class StudentExamCatcherActivity extends Activity {
 						StudentExamCatcherActivity.super.finish();
 					}
 				});
+
+		this.progressDialog = new ProgressDialog(this.getApplicationContext());
+		this.progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		this.progressDialog.setCancelable(false);
 	}
 
 	private void extractValuesFromBundle(Bundle bundle) {
@@ -59,7 +113,8 @@ public class StudentExamCatcherActivity extends Activity {
 
 		if ((TextUtils.isEmpty(this.referenceExamAbsolutePath))
 				|| (TextUtils.isEmpty(this.referenceExamAbsolutePath.trim()))) {
-			// FIXME: Show a Dialog for informating this issue.
+			// FIXME: Add the message and title.
+			(this.alertDialogBuilder.create()).show();
 		}
 	}
 }

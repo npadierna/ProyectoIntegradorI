@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- About Us Activity -->
+    <color name="title_text_color_text_view">#FFFFFF</color>
+
     <!-- Exam Result List Activity -->
     <color name="correct_answer_background_text_view">#00FF00</color>
+    <color name="expected_answer_background_text_view">#0000FF</color>
     <color name="wrong_answer_background_text_view">#FF0000</color>
 
     <!-- Main Session Activity -->

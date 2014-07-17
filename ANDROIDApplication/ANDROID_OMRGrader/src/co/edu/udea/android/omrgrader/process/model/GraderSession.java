@@ -16,8 +16,14 @@ public final class GraderSession implements Serializable {
 	private List<StudentExam> studentsExamsList;
 	private ReferenceExam referenceExam;
 
+	public GraderSession(String referenceExamAsolutePath) {
+		this(new ReferenceExam(referenceExamAsolutePath, null), null);
+	}
+
 	public GraderSession(ReferenceExam referenceExam,
 			List<StudentExam> studentsExamsList) {
+		super();
+
 		this.setReferenceExam(referenceExam);
 		this.setStudentsExamsList(studentsExamsList);
 	}

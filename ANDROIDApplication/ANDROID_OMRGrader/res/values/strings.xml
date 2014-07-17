@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- About Us Activity -->
+    <string name="about_us_activity_name">Acerca de Nosotros</string>
+    <string name="development_semester_text_view">2014/1</string>
+    <string name="project_name_text_view">Proyecto Integrador I</string>
+    <string name="professor_full_names_text_view">Juan Fernando Franco Higuita</string>
+    <string name="professor_title_text_view">Tutor:</string>
+    <string name="students_full_names_text_view">Andersson García Sotelo\nMiguel Ángel Ossa Ruiz\nNeiber de Jesús Padierna Pérez</string>
+    <string name="students_title_text_view">Desarrolladores:</string>
+    <string name="university_name_text_view">Universidad de Antioquia</string>
+
     <!-- Base Album Directory -->
     <string name="album_blackwhite_exams_name">black_white</string>
     <string name="album_exams_name">exams</string>
@@ -54,6 +64,8 @@
     <string name="empty_reference_exam_list">No Hay Exámenes de Referencia</string>
     <string name="error_founding_reference_exams_message_alert_dialog">Un error ha surgido mientras se consultaban los Exámenes de Referencia guardados previamente.\nPor favor, intente de nuevo.</string>
     <string name="error_founding_reference_exams_title_alert_dialog">Error Recuperando Exámenes</string>
+    <string name="error_taking_reference_exam_message_alert_dialog">Un error ha surgido mientras trataba de capturar el nuevo Examen de Referencia a ser guardado.\nPor favor, intente de nuevo.</string>
+    <string name="error_taking_reference_exam_title_alert_dialog">Error Capturando Examen</string>
     <string name="header_title_description">Por favor, seleccione alguno de los elementos de la lista:</string>
     <string name="reference_exam_list_activity_name">Exámenes de Referencia</string>
 

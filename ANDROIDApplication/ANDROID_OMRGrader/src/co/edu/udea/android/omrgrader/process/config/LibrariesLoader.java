@@ -16,19 +16,26 @@ public final class LibrariesLoader {
 	public static final String[] LIBRARIES_NAMES = new String[] {
 			"opencv_java", "nonfree" };
 
+	public static boolean allLibrariesLoaded = false;
+
 	private LibrariesLoader() {
 		super();
 	}
 
-	public static final boolean loadLibraries()
+	public static final synchronized boolean loadLibraries()
 			throws OMRGraderProcessException {
 		Log.v(TAG, "loadLibraries():void");
 
 		try {
-			for (String libraryName : LIBRARIES_NAMES) {
-				Log.i(TAG, String.format("Loading library: %s", libraryName));
+			if (allLibrariesLoaded == false) {
+				for (String libraryName : LIBRARIES_NAMES) {
+					Log.i(TAG,
+							String.format("Loading library: %s", libraryName));
 
-				System.loadLibrary(libraryName);
+					System.loadLibrary(libraryName);
+				}
+
+				allLibrariesLoaded = true;
 			}
 		} catch (Exception e) {
 			throw new OMRGraderProcessException(

@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import co.edu.udea.android.omrgrader.R;
+import co.edu.udea.android.omrgrader.activity.about.AboutUsActivity;
 import co.edu.udea.android.omrgrader.activity.config.preference.GraderSettingsPreferenceActivity;
 import co.edu.udea.android.omrgrader.activity.exam.reference.ReferenceExamListActivity;
 import co.edu.udea.android.omrgrader.process.exam.ReferenceExamHelper;
@@ -51,6 +52,8 @@ public class MainSessionActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.about_us_main_session_menu_item:
+			super.startActivity(new Intent(super.getApplicationContext(),
+					AboutUsActivity.class));
 
 			return (true);
 
@@ -90,7 +93,7 @@ public class MainSessionActivity extends FragmentActivity {
 		this.alertDialogBuilder.setPositiveButton(R.string.accept_button, null);
 	}
 
-	public void putReferencePictureName(String referencePictureName) {
+	public void putReferenceExamPictureName(String referencePictureName) {
 		Log.v(TAG, "putReferencePictureName(String):void");
 
 		this.inputReferenceExamNameDialog.dismiss();

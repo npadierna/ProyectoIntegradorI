@@ -23,6 +23,7 @@ import org.opencv.features2d.KeyPoint;
 import org.opencv.highgui.Highgui;
 import org.opencv.utils.Converters;
 
+import android.text.TextUtils;
 import android.util.Log;
 import co.edu.udea.android.omrgrader.imageprocess.model.Exam;
 import co.edu.udea.android.omrgrader.imageprocess.model.QuestionItem;
@@ -47,7 +48,6 @@ public final class OMRGraderProcess {
 	private int bubbleRadius;
 	private int thresh;
 
-	private Exam onlyLogosTemplateExam;
 	private ExamProcess examProcess;
 	private ImageProcess imageProcess;
 
@@ -99,8 +99,11 @@ public final class OMRGraderProcess {
 	}
 
 	public List<QuestionItem> executeProcessing(Exam onlyLogosTemplateExam,
-			Exam exam, String processedImageDestinationDirectory,
-			String blackWhiteImageDestinationDirectory) {
+			Exam exam, String blackAndWhiteImageDestinationDirectory,
+			String processedImageDestinationDirectory) {
+		Log.v(TAG,
+				"executeProcessing(Exam, Exam, String, String):List<QuestionItem>");
+
 		MatOfDMatch matOfDMatch = new MatOfDMatch();
 
 		DESCRIPTOR_MATCHER.match(
@@ -198,31 +201,9 @@ public final class OMRGraderProcess {
 				new Point(corners_solu.get(0).x + corners_template.get(1).x,
 						corners_solu.get(0).y), new Scalar(0, 255, 0), 4);
 
-		List<Point> center_locations = new ArrayList<Point>();
-		// List<Integer> yCoordinatesList = new
-		// ArrayList<Integer>(Arrays.asList(
-		// 168, 196, 223, 251, 278, 305, 333, 360, 388, 416, 443, 471,
-		// 498, 526, 554));
-		List<Integer> y_cor = new ArrayList<Integer>(
-				Arrays.asList(193, 223, 253, 283, 313, 343, 373, 403, 433, 463,
-						493, 523, 553, 583, 613));
-
-		for (int row = 0; row < 15; row++) {
-			center_locations.add(new Point(128, y_cor.get(row)));
-			center_locations.add(new Point(161, y_cor.get(row)));
-			center_locations.add(new Point(194, y_cor.get(row)));
-			center_locations.add(new Point(227, y_cor.get(row)));
-		}
-
-		for (int row = 0; row < 15; row++) {
-			center_locations.add(new Point(337, y_cor.get(row)));
-			center_locations.add(new Point(370, y_cor.get(row)));
-			center_locations.add(new Point(403, y_cor.get(row)));
-			center_locations.add(new Point(436, y_cor.get(row)));
-		}
-
 		Mat center_locations_mat = Converters
-				.vector_Point2d_to_Mat(center_locations);
+				.vector_Point2d_to_Mat(this.examProcess
+						.getBubblesCentersPointsList());
 		Mat center_locations_transfered = new Mat();
 		Core.perspectiveTransform(center_locations_mat,
 				center_locations_transfered, H);
@@ -239,23 +220,25 @@ public final class OMRGraderProcess {
 							.get(counter).y), 3, new Scalar(0, 0, 255), -1);
 		}
 
-		// 439 - Auto_grader.java
-		// FIXME: This String must be fixed.
-		String computedAnsweredPhotodPath = this.imageProcess
-				.writePhotoFileToSDCard("examForProcessing-Processed.png",
-						img_matches, new File(
-								processedImageDestinationDirectory));
+		if (!TextUtils.isEmpty(processedImageDestinationDirectory)) {
+			this.imageProcess.writePhotoFileToSDCard(
+					"examForProcessing-Processed.png", img_matches, new File(
+							processedImageDestinationDirectory));
+		}
 
 		Mat imageSolutionMat = this.imageProcess.convertImageToBlackWhite(
 				exam.getGrayScaledImageMat(), false);
-		this.imageProcess.writePhotoFileToSDCard(
-				"examForProcessing-BlackAndWhite.png", imageSolutionMat,
-				new File(blackWhiteImageDestinationDirectory));
+		if (!TextUtils.isEmpty(blackAndWhiteImageDestinationDirectory)) {
+			this.imageProcess.writePhotoFileToSDCard(
+					"examForProcessing-BlackAndWhite.png", imageSolutionMat,
+					new File(blackAndWhiteImageDestinationDirectory));
+		}
 
 		// List<QuestionItem> questionItemsList = this.getAnswers(
 		// imageSolutionMat, centerLocationsTransferedList, 12);
 		exam.setQuestionsItemsList(this.examProcess.findAnswers(
-				imageSolutionMat, this.getBubbleRadius(), this.getThresh()));
+				imageSolutionMat, center_locations_t, this.getBubbleRadius(),
+				this.getThresh()));
 
 		return (exam.getQuestionsItemsList());
 	}
@@ -442,7 +425,8 @@ public final class OMRGraderProcess {
 		// List<QuestionItem> questionItemsList = this.getAnswers(
 		// imageSolutionMat, centerLocationsTransferedList, 12);
 		List<QuestionItem> questionsItemsList = this.examProcess.findAnswers(
-				imageSolutionMat, this.getBubbleRadius(), this.getThresh());
+				imageSolutionMat, center_locations_t, this.getBubbleRadius(),
+				this.getThresh());
 
 		return (questionsItemsList);
 	}

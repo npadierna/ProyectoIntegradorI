@@ -23,9 +23,9 @@ public class StudentExam extends AbstractExam {
 		this(idNumber, pictureAbsolutePath, questionsItemsList, -1.0F);
 	}
 
-	public StudentExam(String idNumber, String picturePath,
+	public StudentExam(String idNumber, String pictureAbsolutePath,
 			List<QuestionItem> questionsItemsList, float grade) {
-		super(picturePath, questionsItemsList);
+		super(pictureAbsolutePath, questionsItemsList);
 
 		this.setIdNumber(idNumber);
 		this.setGrade(grade);

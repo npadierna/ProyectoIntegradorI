@@ -56,10 +56,6 @@ public class ReferenceExamListActivity extends ListActivity {
 		Log.v(TAG, "createWidgetsComponents():void");
 
 		this.alertDialogBuilder = new AlertDialog.Builder(this);
-		this.alertDialogBuilder
-				.setMessage(R.string.error_founding_reference_exams_message_alert_dialog);
-		this.alertDialogBuilder
-				.setTitle(R.string.error_founding_reference_exams_title_alert_dialog);
 		this.alertDialogBuilder.setPositiveButton(R.string.accept_button,
 				new DialogInterface.OnClickListener() {
 
@@ -73,6 +69,10 @@ public class ReferenceExamListActivity extends ListActivity {
 			this.referenceExamsItemsList = this.referenceExamHelper
 					.findAllReferenceExamsItems();
 		} catch (OMRGraderProcessException e) {
+			this.alertDialogBuilder
+					.setMessage(R.string.error_founding_reference_exams_message_alert_dialog);
+			this.alertDialogBuilder
+					.setTitle(R.string.error_founding_reference_exams_title_alert_dialog);
 			(this.alertDialogBuilder.create()).show();
 
 			return;
@@ -99,8 +99,19 @@ public class ReferenceExamListActivity extends ListActivity {
 	private void startStudentExamCatcherActivity(String referenceExamFullName) {
 		Log.v(TAG, "startStudentExamCatcherActivity(String):void");
 
-		String referenceExamAbsolutePath = this.referenceExamHelper
-				.obtainAbsolutePathForReferenceExam(referenceExamFullName);
+		String referenceExamAbsolutePath = null;
+		try {
+			referenceExamAbsolutePath = this.referenceExamHelper
+					.obtainAbsolutePathForReferenceExam(referenceExamFullName);
+		} catch (OMRGraderProcessException e) {
+			this.alertDialogBuilder
+					.setMessage(R.string.error_taking_reference_exam_message_alert_dialog);
+			this.alertDialogBuilder
+					.setTitle(R.string.error_taking_reference_exam_title_alert_dialog);
+			(this.alertDialogBuilder.create()).show();
+
+			return;
+		}
 
 		Intent intent = new Intent(super.getApplicationContext(),
 				StudentExamCatcherActivity.class);

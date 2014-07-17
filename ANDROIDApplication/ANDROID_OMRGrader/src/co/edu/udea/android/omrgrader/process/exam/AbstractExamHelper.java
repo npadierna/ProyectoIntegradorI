@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import co.edu.udea.android.omrgrader.R;
 import co.edu.udea.android.omrgrader.directory.BaseStorageDirectory;
 import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
@@ -51,6 +52,14 @@ abstract class AbstractExamHelper {
 
 	protected void createIntentForTakingPicture(String examPictureName,
 			File destinationDirectoryFile) throws OMRGraderProcessException {
+		if (TextUtils.isEmpty(examPictureName)
+				|| (destinationDirectoryFile == null)
+				|| (TextUtils.isEmpty(examPictureName.trim()))
+				|| (!destinationDirectoryFile.canWrite())) {
+			throw new OMRGraderProcessException(
+					"A grave error has been thrown caused by the bad parameterization");
+		}
+
 		File takenReferencePictureFile = null;
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -68,7 +77,7 @@ abstract class AbstractExamHelper {
 			this.getContext().startActivity(takePictureIntent);
 		} catch (Exception e) {
 			throw new OMRGraderProcessException(
-					"A exception has ocurred while the Camera Applications was being requested",
+					"A exception has ocurred while the Camera Application was being requested for taking the photo",
 					e);
 		}
 	}

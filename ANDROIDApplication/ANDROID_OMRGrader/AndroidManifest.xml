@@ -60,6 +60,12 @@
             android:label="@string/grader_settings_preference_activity_name"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.about.AboutUsActivity"
+            android:label="@string/about_us_activity_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
     </application>
 
 </manifest>

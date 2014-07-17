@@ -6,6 +6,7 @@ import java.util.List;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
+import android.util.Log;
 import co.edu.udea.android.omrgrader.imageprocess.model.QuestionItem;
 
 /**
@@ -15,6 +16,8 @@ import co.edu.udea.android.omrgrader.imageprocess.model.QuestionItem;
  * @author Neiber Padierna P&eacute;rez
  */
 final class ExamProcess {
+
+	private static final String TAG = ExamProcess.class.getSimpleName();
 
 	private int questionsOptionsAmout;
 
@@ -28,19 +31,28 @@ final class ExamProcess {
 		this.bubblesCentersPointsList = bubblesCentersPointsList;
 	}
 
-	public List<QuestionItem> findAnswers(Mat examPictureMat, int bubbleRadius,
-			int thresh) {
+	public List<Point> getBubblesCentersPointsList() {
+
+		return (this.bubblesCentersPointsList);
+	}
+
+	public void setBubblesCentersPointsList(List<Point> bubblesCentersPointsList) {
+		this.bubblesCentersPointsList = bubblesCentersPointsList;
+	}
+
+	public List<QuestionItem> findAnswers(Mat examPictureMat,
+			List<Point> bubblesCentersPointsList, int bubbleRadius, int thresh) {
 		// int thresh = 150;
 		List<QuestionItem> questionsItemsList = new ArrayList<QuestionItem>();
 
-		for (int i = 0; i < (this.bubblesCentersPointsList.size() / this.questionsOptionsAmout); i++) {
+		for (int i = 0; i < (bubblesCentersPointsList.size() / this.questionsOptionsAmout); i++) {
 			boolean[] answers = new boolean[this.questionsOptionsAmout];
 			int[] pixelCounter = new int[this.questionsOptionsAmout];
 			StringBuilder stringBuilder = new StringBuilder();
 
 			for (int j = 0; j < this.questionsOptionsAmout; j++) {
 				int position = i * this.questionsOptionsAmout + j;
-				Point point = this.bubblesCentersPointsList.get(position);
+				Point point = bubblesCentersPointsList.get(position);
 
 				pixelCounter[j] = this.countWhitePixelsInBubble(examPictureMat,
 						point, bubbleRadius);
@@ -52,8 +64,9 @@ final class ExamProcess {
 			questionsItemsList.add(new QuestionItem((short) (i + 1), answers));
 
 			// FIXME: TAG.
-			// Log.i(OMRGraderProcess.TAG, "White pixeles count for question #"
-			// + i + ": " + stringBuilder.toString());
+			Log.d(TAG, String.format(
+					"White pixeles count for question #%d: %s", i,
+					stringBuilder.toString()));
 		}
 
 		return (questionsItemsList);

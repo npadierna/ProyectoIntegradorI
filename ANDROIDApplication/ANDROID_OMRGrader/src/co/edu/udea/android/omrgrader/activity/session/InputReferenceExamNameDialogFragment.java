@@ -47,7 +47,7 @@ public class InputReferenceExamNameDialogFragment extends DialogFragment {
 					@Override()
 					public void onClick(DialogInterface dialog, int which) {
 						((MainSessionActivity) getActivity())
-								.putReferencePictureName(inputReferenceNameEditText
+								.putReferenceExamPictureName(inputReferenceNameEditText
 										.getText().toString());
 					}
 				});

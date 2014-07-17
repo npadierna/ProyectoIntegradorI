@@ -11,7 +11,7 @@ import co.edu.udea.android.omrgrader.imageprocess.model.QuestionItem;
  * @author Miguel &Aacute;ngel Ossa Ruiz
  * @author Neiber Padierna P&eacute;rez
  */
-abstract class AbstractExam implements Serializable {
+public abstract class AbstractExam implements Serializable {
 
 	private static final long serialVersionUID = 6141349953004037485L;
 
