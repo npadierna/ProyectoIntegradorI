@@ -18,6 +18,10 @@ public abstract class AbstractExam implements Serializable {
 	private List<QuestionItem> questionsItemsList;
 	private String pictureAbsolutePath;
 
+	public AbstractExam() {
+		this(null, null);
+	}
+
 	public AbstractExam(String pictureAbsolutePath,
 			List<QuestionItem> questionsItemsList) {
 		this.setPictureAbsolutePath(pictureAbsolutePath);

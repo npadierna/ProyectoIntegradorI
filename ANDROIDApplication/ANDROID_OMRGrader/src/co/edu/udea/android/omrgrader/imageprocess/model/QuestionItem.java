@@ -1,6 +1,7 @@
 package co.edu.udea.android.omrgrader.imageprocess.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -15,6 +16,8 @@ public final class QuestionItem implements Parcelable, Serializable {
 
 	private static final long serialVersionUID = 8772507323900628318L;
 
+	public static int questionsOptionsAmout = 0;
+
 	private boolean questionsOptionsChosen[];
 	private short id;
 
@@ -26,8 +29,7 @@ public final class QuestionItem implements Parcelable, Serializable {
 	}
 
 	public QuestionItem(Parcel parcel) {
-		// DEBUGME: How does Parcel manage the Booleans Array?
-		boolean booleans[] = new boolean[] {};
+		boolean booleans[] = new boolean[questionsOptionsAmout];
 
 		parcel.readBooleanArray(booleans);
 		this.setQuestionsOptionsChosen(booleans);
@@ -51,6 +53,46 @@ public final class QuestionItem implements Parcelable, Serializable {
 
 	public void setId(short id) {
 		this.id = id;
+	}
+
+	@Override()
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+
+		result = prime * result + this.getId();
+		result = prime * result
+				+ Arrays.hashCode(this.getQuestionsOptionsChosen());
+
+		return (result);
+	}
+
+	@Override()
+	public boolean equals(Object obj) {
+		if (this == obj) {
+
+			return (true);
+		}
+
+		if (obj == null) {
+
+			return (false);
+		}
+
+		if (!(obj instanceof QuestionItem)) {
+
+			return (false);
+		}
+
+		QuestionItem other = (QuestionItem) obj;
+		if ((this.getId() != other.getId())
+				|| (!Arrays.equals(this.getQuestionsOptionsChosen(),
+						other.getQuestionsOptionsChosen()))) {
+
+			return (false);
+		}
+
+		return (true);
 	}
 
 	@Override()

@@ -23,6 +23,7 @@
 
     <!-- Exam Result List Activity -->
     <string name="exam_result_list_activity_name">Resultados Obtenidos</string>
+    <string name="correct_answers_amout_message_text_view">Correctas:</string>
     <string name="final_grade_message_text_view">Nota Final:</string>
 
     <string-array name="answers_options_text">
@@ -41,20 +42,29 @@
 
     <!-- Grader Settings Preference Activity -->
     <string name="grader_settings_preference_activity_name">Configuración de Calificación</string>
+    <string name="grader_settings_preference_default_maximum_grade">5.0</string>
     <string name="grader_settings_preference_maximum_grade_dialog_message">Digite el nuevo valor que desea para el máximo valor de la Nota al instante de efectuar la calificación:</string>
     <string name="grader_settings_preference_maximum_grade_dialog_title">Máximo Valor de Nota</string>
+    <string name="grader_settings_preference_maximum_grade_key">maximumGrade</string>
     <string name="grader_settings_preference_maximum_grade_summary">Valor máximo para la nota o resultado establecido para la calificación.</string>
     <string name="grader_settings_preference_maximum_grade_title">Máximo Valor de Nota</string>
 
+    <string-array name="grader_settings_preferences_array_key">
+        <item>5.0</item>
+        <item>10.0</item>
+        <item>50.0</item>
+        <item>100.0</item>
+    </string-array>
+
     <!-- Input Reference Name Dialog Fragment -->
-    <string name="main_text_dialog_fragment">Por favor, ingrese el nombre con el cual desea guardar el exámen de Referencia:</string>
-    <string name="main_title_dialog_fragment">Ingresar Nombre</string>
+    <string name="main_text_dialog_fragment">Por favor, ingrese el nombre con el cual desea guardar el nuevo Examen de Referencia:</string>
+    <string name="main_title_dialog_fragment">Ingresar Nuevo Nombre</string>
 
     <!-- Main Session Activity -->
     <string name="new_grader_session_button">Calificar Nueva Sesión de Exámenes</string>
-    <string name="new_reference_template_button">Capturar Nuevo Exámen de Referencia</string>
-    <string name="no_reference_exam_taken_message_alert_dialog">No se ha podido procesar exitosamente la operación para tomar un nuevo exámen de referencia.\nPor favor, intente de nuevo.</string>
-    <string name="no_reference_exam_taken_title_alert_dialog">Toma de Exámen Falalda</string>
+    <string name="new_reference_template_button">Capturar Nuevo Examen de Referencia</string>
+    <string name="no_reference_exam_taken_message_alert_dialog">No se ha podido procesar exitosamente la operación para tomar un nuevo Examen de Referencia.\nPor favor, intente de nuevo.</string>
+    <string name="no_reference_exam_taken_title_alert_dialog">Toma de Examen Falalda</string>
 
     <!-- Menu Main Session Activity -->
     <string name="about_us_main_session_menu_item">Acerca de Nosotros</string>
@@ -80,5 +90,16 @@
     <string name="no_found_libraries_title_alert_dialog">Sin Librerías OpenCV</string>
 
     <!-- Student Exam Catcher Activity -->
+    <string name="default_base_student_exam_name">StudentExam</string>
+    <string name="error_processing_reference_exam_message_alert_dialog">Un grave error ha surgido procesando el Examen de Referencia, y no se ha podido completar la tarea.\nPor favor, intente de nuevo.</string>
+    <string name="error_processing_reference_exam_title_alert_dialog">Error Proesando Examen</string>
+    <string name="error_processing_student_exam_message_alert_dialog">Un grave error ha surgido procesando el Examen del Estudiante, y no se ha podido completar la tarea.\nPor favor, intente de nuevo.</string>
+    <string name="error_processing_student_exam_title_alert_dialog">Error Procesando Examen</string>
+    <string name="no_reference_exam_name_found_message_alert_dialog">El nombre o ruta absoluta del Examen de Referencia no es válida o posee problemas y el archivo no se puede acceder.\nPor favor, intente con otro examen.</string>
+    <string name="no_reference_exam_name_found_title_alert_dialog">Nombre del Examen de Referencia</string>
+    <string name="reference_exam_processing_message_progress_dialog">Procesando el Examen de Referencia seleccionado para sesión de calificación#8230;</string>
+    <string name="reference_exam_processing_title_progress_dialog">Examen de Referencia</string>
+    <string name="student_exam_processing_message_progress_dialog">Procesando el Examen del Estudiante tomado para ser calificado durante la sesión#8230;</string>
+    <string name="student_exam_processing_title_progress_dialog">Examen de Estudiante</string>
 
 </resources>

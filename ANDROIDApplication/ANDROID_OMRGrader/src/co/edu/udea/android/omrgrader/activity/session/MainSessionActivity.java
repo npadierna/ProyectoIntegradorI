@@ -29,7 +29,7 @@ public class MainSessionActivity extends FragmentActivity {
 
 	private ReferenceExamHelper referenceExamHelper;
 
-	private AlertDialog.Builder alertDialogBuilder;
+	private AlertDialog.Builder errorAlertDialogBuilder;
 	private DialogFragment inputReferenceExamNameDialog;
 
 	@Override()
@@ -85,12 +85,12 @@ public class MainSessionActivity extends FragmentActivity {
 		this.inputReferenceExamNameDialog = new InputReferenceExamNameDialogFragment();
 		this.inputReferenceExamNameDialog.setArguments(bundle);
 
-		this.alertDialogBuilder = new AlertDialog.Builder(this);
-		this.alertDialogBuilder
+		this.errorAlertDialogBuilder = new AlertDialog.Builder(this);
+		this.errorAlertDialogBuilder
 				.setMessage(R.string.no_reference_exam_taken_message_alert_dialog);
-		this.alertDialogBuilder
+		this.errorAlertDialogBuilder
 				.setTitle(R.string.no_reference_exam_taken_title_alert_dialog);
-		this.alertDialogBuilder.setPositiveButton(R.string.accept_button, null);
+		this.errorAlertDialogBuilder.setPositiveButton(R.string.accept_button, null);
 	}
 
 	public void putReferenceExamPictureName(String referencePictureName) {
@@ -108,7 +108,7 @@ public class MainSessionActivity extends FragmentActivity {
 						.createIntentForTakingReferenceExamPicture(referencePictureName
 								.trim());
 			} catch (OMRGraderProcessException e) {
-				(this.alertDialogBuilder.create()).show();
+				(this.errorAlertDialogBuilder.create()).show();
 
 				return;
 			}

@@ -86,9 +86,9 @@ public class ExamHelperAsyncTask extends AsyncTask<Object, Void, AbstractExam> {
 	protected void onPreExecute() {
 		super.onPreExecute();
 
-		// if (this.progressDialog != null) {
-		// this.progressDialog.show();
-		// }
+		if (this.progressDialog != null) {
+			this.progressDialog.show();
+		}
 	}
 
 	private boolean checkValidityParameters(Object... args) {

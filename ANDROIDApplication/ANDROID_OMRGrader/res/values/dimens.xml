@@ -5,6 +5,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Exam Result List Activity -->
+    <dimen name="correct_answers_amout_message_margin_right_text_view">5dip</dimen>
+    <dimen name="correct_answers_amout_value_margin_left_text_view">5dip</dimen>
     <dimen name="final_grade_message_margin_right_text_view">5dip</dimen>
     <dimen name="final_grade_value_margin_left_text_view">5dip</dimen>
     <dimen name="list_margin_top_exam_result_list_view">16dip</dimen>

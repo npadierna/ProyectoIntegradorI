@@ -24,7 +24,14 @@ public final class ReferenceExamHelper extends AbstractExamHelper {
 		super(context);
 	}
 
-	public void createIntentForTakingReferenceExamPicture(
+	@Override()
+	public File obtainDirectoryFileForExams() {
+
+		return (super.getBaseStorageDirectory().getStorageDirectoriesFilesMap()
+				.get(super.getContext().getString(R.string.album_exams_name)));
+	}
+
+	public File createIntentForTakingReferenceExamPicture(
 			String referenceExamPictureName) throws OMRGraderProcessException {
 		File destinationDirectoryFile = super
 				.getBaseStorageDirectory()
@@ -32,8 +39,8 @@ public final class ReferenceExamHelper extends AbstractExamHelper {
 				.get(super.getContext().getResources()
 						.getString(R.string.album_exams_name));
 
-		super.createIntentForTakingPicture(referenceExamPictureName,
-				destinationDirectoryFile);
+		return (super.createIntentForTakingPicture(referenceExamPictureName,
+				destinationDirectoryFile));
 	}
 
 	public List<ReferenceExamItem> findAllReferenceExamsItems()

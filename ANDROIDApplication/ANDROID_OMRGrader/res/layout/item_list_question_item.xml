@@ -10,9 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@color/normal_answer_background_text_view"
         android:gravity="center"
         android:text="1"
-        android:textAppearance="?android:attr/textAppearanceMedium" >
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/answer_text_color_text_view" >
     </TextView>
 
     <TextView
@@ -51,13 +53,13 @@
         android:text="D" >
     </TextView>
 
-    <TextView
-        android:id="@+id/fifth_answer_option_text_view"
-        style="@style/QuestionOptionTextViewTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="E" >
-    </TextView>
+<!--     <TextView -->
+<!--         android:id="@+id/fifth_answer_option_text_view" -->
+<!--         style="@style/QuestionOptionTextViewTheme" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_weight="1" -->
+<!--         android:text="E" > -->
+<!--     </TextView> -->
 
 </LinearLayout>

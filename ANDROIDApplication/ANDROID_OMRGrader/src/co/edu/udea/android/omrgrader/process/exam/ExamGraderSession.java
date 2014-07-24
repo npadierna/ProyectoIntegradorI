@@ -1,5 +1,6 @@
 package co.edu.udea.android.omrgrader.process.exam;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import org.opencv.core.Point;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
 import co.edu.udea.android.omrgrader.directory.BaseStorageDirectory;
 import co.edu.udea.android.omrgrader.process.exam.thread.ExamHelperAsyncTask;
 import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
@@ -22,7 +25,9 @@ import co.edu.udea.android.omrgrader.process.model.StudentExam;
  * @author Miguel &Aacute;ngel Ossa Ruiz
  * @author Neiber Padierna P&eacute;rez
  */
-public final class ExamGraderSession {
+public final class ExamGraderSession implements Parcelable, Serializable {
+
+	private static final long serialVersionUID = -8339627345414088591L;
 
 	private int questionsOptionsAmout;
 	private int bubbleRadius;
@@ -32,6 +37,14 @@ public final class ExamGraderSession {
 	private GraderSession graderSession;
 
 	private List<Point> bubblesCentersPointsList;
+
+	public ExamGraderSession(Parcel parcel) {
+		this.setQuestionsOptionsAmout(parcel.readInt());
+		this.setBubbleRadius(parcel.readInt());
+		this.setThresh(parcel.readInt());
+		this.setGraderSession((GraderSession) parcel
+				.readParcelable(GraderSession.class.getClassLoader()));
+	}
 
 	public ExamGraderSession(Context context, String referenceExamAbsolutePath,
 			int questionsOptionsAmout, int bubbleRadius, int thresh) {
@@ -92,10 +105,13 @@ public final class ExamGraderSession {
 
 	public ReferenceExam computeReferenceExam(ProgressDialog progressDialog)
 			throws OMRGraderProcessException {
+		ReferenceExam referenceExam = (ReferenceExam) this.computeExam(
+				progressDialog, this.getGraderSession().getReferenceExam()
+						.getPictureAbsolutePath(), Boolean.TRUE);
 
-		return ((ReferenceExam) this.computeExam(progressDialog,
-				this.getGraderSession().getReferenceExam()
-						.getPictureAbsolutePath(), Boolean.TRUE));
+		this.getGraderSession().setReferenceExam(referenceExam);
+
+		return (referenceExam);
 	}
 
 	private AbstractExam computeExam(ProgressDialog progressDialog,
@@ -136,10 +152,13 @@ public final class ExamGraderSession {
 
 	public StudentExam computeStudentExam(ProgressDialog progressDialog,
 			String studentExamAbsolutePath) throws OMRGraderProcessException {
-
 		// FIXME: Check the validity of studentExamAbsolutePath parameter.
-		return ((StudentExam) this.computeExam(progressDialog,
-				studentExamAbsolutePath, Boolean.FALSE));
+		StudentExam studentExam = (StudentExam) this.computeExam(
+				progressDialog, studentExamAbsolutePath, Boolean.FALSE);
+
+		this.getGraderSession().getStudentsExamsList().add(studentExam);
+
+		return (studentExam);
 	}
 
 	public List<Point> buildBubblesCenterCoordinates(int[] bubblesXCoordinates,
@@ -164,4 +183,33 @@ public final class ExamGraderSession {
 
 		return (pointsList);
 	}
+
+	@Override()
+	public int describeContents() {
+
+		return (0);
+	}
+
+	@Override()
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(this.getQuestionsOptionsAmout());
+		dest.writeInt(this.getBubbleRadius());
+		dest.writeInt(this.getThresh());
+		dest.writeParcelable(this.getGraderSession(), 0);
+	}
+
+	public static final Parcelable.Creator<ExamGraderSession> CREATOR = new Parcelable.Creator<ExamGraderSession>() {
+
+		@Override()
+		public ExamGraderSession createFromParcel(Parcel source) {
+
+			return (new ExamGraderSession(source));
+		}
+
+		@Override()
+		public ExamGraderSession[] newArray(int size) {
+
+			return (new ExamGraderSession[size]);
+		}
+	};
 }

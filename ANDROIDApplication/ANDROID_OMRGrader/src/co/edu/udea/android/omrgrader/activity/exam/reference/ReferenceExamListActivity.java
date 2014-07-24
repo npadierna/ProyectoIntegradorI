@@ -34,7 +34,7 @@ public class ReferenceExamListActivity extends ListActivity {
 
 	private List<ReferenceExamItem> referenceExamsItemsList;
 
-	private AlertDialog.Builder alertDialogBuilder;
+	private AlertDialog.Builder errorAlertDialogBuilder;
 
 	@Override()
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,8 @@ public class ReferenceExamListActivity extends ListActivity {
 	private void createWidgetsComponents() {
 		Log.v(TAG, "createWidgetsComponents():void");
 
-		this.alertDialogBuilder = new AlertDialog.Builder(this);
-		this.alertDialogBuilder.setPositiveButton(R.string.accept_button,
+		this.errorAlertDialogBuilder = new AlertDialog.Builder(this);
+		this.errorAlertDialogBuilder.setPositiveButton(R.string.accept_button,
 				new DialogInterface.OnClickListener() {
 
 					@Override()
@@ -69,11 +69,11 @@ public class ReferenceExamListActivity extends ListActivity {
 			this.referenceExamsItemsList = this.referenceExamHelper
 					.findAllReferenceExamsItems();
 		} catch (OMRGraderProcessException e) {
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setMessage(R.string.error_founding_reference_exams_message_alert_dialog);
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setTitle(R.string.error_founding_reference_exams_title_alert_dialog);
-			(this.alertDialogBuilder.create()).show();
+			(this.errorAlertDialogBuilder.create()).show();
 
 			return;
 		}
@@ -104,11 +104,11 @@ public class ReferenceExamListActivity extends ListActivity {
 			referenceExamAbsolutePath = this.referenceExamHelper
 					.obtainAbsolutePathForReferenceExam(referenceExamFullName);
 		} catch (OMRGraderProcessException e) {
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setMessage(R.string.error_taking_reference_exam_message_alert_dialog);
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setTitle(R.string.error_taking_reference_exam_title_alert_dialog);
-			(this.alertDialogBuilder.create()).show();
+			(this.errorAlertDialogBuilder.create()).show();
 
 			return;
 		}

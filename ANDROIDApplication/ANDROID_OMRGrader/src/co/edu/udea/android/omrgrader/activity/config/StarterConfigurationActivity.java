@@ -40,7 +40,7 @@ public class StarterConfigurationActivity extends Activity {
 
 	private BaseStorageDirectory baseStorageDirectory;
 
-	private AlertDialog.Builder alertDialogBuilder;
+	private AlertDialog.Builder errorAlertDialogBuilder;
 
 	@Override()
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +62,11 @@ public class StarterConfigurationActivity extends Activity {
 				onlyLogosTemplateFile = this.baseStorageDirectory
 						.copyBaseTemplateToDirectory();
 			} catch (OMRGraderProcessException e) {
-				this.alertDialogBuilder
+				this.errorAlertDialogBuilder
 						.setMessage(R.string.no_copied_resources_message_alert_dialog);
-				this.alertDialogBuilder
+				this.errorAlertDialogBuilder
 						.setTitle(R.string.no_copied_resources_title_alert_dialog);
-				(this.alertDialogBuilder.create()).show();
+				(this.errorAlertDialogBuilder.create()).show();
 
 				return;
 			}
@@ -86,8 +86,8 @@ public class StarterConfigurationActivity extends Activity {
 	private void createWidgetsComponents() {
 		Log.v(TAG, "createWidgetsComponents():void");
 
-		this.alertDialogBuilder = new AlertDialog.Builder(this);
-		this.alertDialogBuilder.setPositiveButton(R.string.accept_button,
+		this.errorAlertDialogBuilder = new AlertDialog.Builder(this);
+		this.errorAlertDialogBuilder.setPositiveButton(R.string.accept_button,
 				new DialogInterface.OnClickListener() {
 
 					@Override()
@@ -103,11 +103,11 @@ public class StarterConfigurationActivity extends Activity {
 		if (isLibrariesLoaded == false) {
 			Log.w(TAG, "All libraries required have not been loaded.");
 
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setMessage(R.string.no_found_libraries_message_alert_dialog);
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setTitle(R.string.no_found_libraries_title_alert_dialog);
-			(this.alertDialogBuilder.create()).show();
+			(this.errorAlertDialogBuilder.create()).show();
 
 			return (false);
 		}
@@ -117,11 +117,11 @@ public class StarterConfigurationActivity extends Activity {
 		if (isCameraOk == false) {
 			Log.w(TAG, "There is not any available Camera Application.");
 
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setMessage(R.string.no_cameras_message_alert_dialog);
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setTitle(R.string.no_cameras_title_alert_dialog);
-			(this.alertDialogBuilder.create()).show();
+			(this.errorAlertDialogBuilder.create()).show();
 
 			return (false);
 		}
@@ -134,11 +134,11 @@ public class StarterConfigurationActivity extends Activity {
 			Log.w(TAG,
 					"All needed directories and files were not created successfully.");
 
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setMessage(R.string.no_created_directories_message_alert_dialog);
-			this.alertDialogBuilder
+			this.errorAlertDialogBuilder
 					.setTitle(R.string.no_created_directories_title_alert_dialog);
-			(this.alertDialogBuilder.create()).show();
+			(this.errorAlertDialogBuilder.create()).show();
 
 			return (false);
 		}

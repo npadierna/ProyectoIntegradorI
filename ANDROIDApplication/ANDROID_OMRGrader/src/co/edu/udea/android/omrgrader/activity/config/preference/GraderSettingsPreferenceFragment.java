@@ -5,10 +5,14 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import co.edu.udea.android.omrgrader.R;
 
 public class GraderSettingsPreferenceFragment extends PreferenceFragment
 		implements OnSharedPreferenceChangeListener {
+
+	private static final String TAG = GraderSettingsPreferenceFragment.class
+			.getSimpleName();
 
 	private SharedPreferences sharedPreferences;
 
@@ -21,6 +25,8 @@ public class GraderSettingsPreferenceFragment extends PreferenceFragment
 	@Override()
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
+		Log.i(TAG, String.format("Shared Preference Changed: [%s, %s]", key,
+				sharedPreferences.getString(key, "")));
 	}
 
 	@Override()

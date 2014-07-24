@@ -1,15 +1,23 @@
 package co.edu.udea.android.omrgrader.activity.exam.student;
 
+import java.io.File;
+import java.io.IOException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources.NotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import co.edu.udea.android.omrgrader.R;
+import co.edu.udea.android.omrgrader.activity.exam.result.ExamResultListActivity;
 import co.edu.udea.android.omrgrader.process.exam.ExamGraderSession;
-import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
+import co.edu.udea.android.omrgrader.process.exam.StudentExamHelper;
 
 /**
  * 
@@ -23,15 +31,37 @@ public class StudentExamCatcherActivity extends Activity {
 			.getSimpleName();
 
 	public static final String REFERENCE_EXAM_PATH_KEY = "Key for Reference Exam Path";
-	private static final int TAKE_STUDENT_PICTURE_REQUEST = 1;
+	private static final int TAKE_STUDENT_EXAM_PICTURE_REQUEST = 1;
 
 	private String referenceExamAbsolutePath;
 	private String newStudentExamAbsolutePath;
 
 	private ExamGraderSession examGraderSession;
+	private StudentExamHelper studentExamHelper;
 
-	private AlertDialog.Builder alertDialogBuilder;
+	private AlertDialog.Builder errorAlertDialogBuilder;
 	private ProgressDialog progressDialog;
+
+	@Override()
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case TAKE_STUDENT_EXAM_PICTURE_REQUEST:
+			if (resultCode == Activity.RESULT_OK) {
+				try {
+					// FIXME: Add the corrects title and message for the
+					// Progress Dialog.
+					this.newStudentExamAbsolutePath = "/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG";
+
+					this.examGraderSession.computeStudentExam(
+							this.progressDialog,
+							this.newStudentExamAbsolutePath);
+				} catch (Exception e) {
+					// FIXME: Fix this issue.
+				}
+			}
+			break;
+		}
+	}
 
 	@Override()
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +74,87 @@ public class StudentExamCatcherActivity extends Activity {
 	}
 
 	@Override()
+	protected void onResume() {
+		super.onResume();
+
+		if (this.newStudentExamAbsolutePath == null) {
+			try {
+				this.newStudentExamAbsolutePath = this
+						.createIntentForTakingStudentExamPicture(
+								super.getString(R.string.default_base_student_exam_name),
+								this.studentExamHelper
+										.obtainDirectoryFileForExams())
+						.getAbsolutePath();
+			} catch (Exception e) {
+				// FIXME: Fix this issue.
+
+				return;
+			}
+		} else {
+			Bundle bundle = new Bundle();
+			bundle.putParcelable(
+					ExamResultListActivity.EXAM_GRADER_SESSION_KEY,
+					this.examGraderSession);
+
+			Intent intent = new Intent(super.getApplicationContext(),
+					ExamResultListActivity.class);
+			intent.putExtras(bundle);
+
+			super.startActivity(intent);
+			super.finish();
+		}
+	}
+
+	private File createIntentForTakingStudentExamPicture(
+			String examPictureName, File destinationDirectoryFile)
+			throws NotFoundException, IOException {
+		File takenReferencePictureFile = null;
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+		takenReferencePictureFile = File.createTempFile(
+				examPictureName,
+				super.getApplicationContext().getResources()
+						.getString(R.string.pictures_prefix),
+				destinationDirectoryFile);
+
+		takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+				Uri.fromFile(takenReferencePictureFile));
+
+		super.startActivityForResult(takePictureIntent,
+				TAKE_STUDENT_EXAM_PICTURE_REQUEST);
+
+		return (takenReferencePictureFile);
+	}
+
+	@Override()
 	protected void onStart() {
 		super.onStart();
 
-		this.examGraderSession
-				.getGraderSession()
-				.getReferenceExam()
-				.setPictureAbsolutePath(
-						"/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG");
-		try {
-			this.progressDialog.setMessage(super
-					.getString(R.string.application_name));
-			this.progressDialog.setTitle(super
-					.getString(R.string.application_name));
+		if (this.newStudentExamAbsolutePath == null) {
+			this.examGraderSession
+					.getGraderSession()
+					.getReferenceExam()
+					.setPictureAbsolutePath(
+							"/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG");
+			try {
+				this.progressDialog
+						.setMessage(super
+								.getString(R.string.reference_exam_processing_message_progress_dialog));
+				this.progressDialog
+						.setTitle(super
+								.getString(R.string.reference_exam_processing_title_progress_dialog));
 
-			this.examGraderSession.computeReferenceExam(this.progressDialog);
-		} catch (OMRGraderProcessException e) {
-			e.printStackTrace();
+				this.examGraderSession
+						.computeReferenceExam(this.progressDialog);
+			} catch (Exception e) {
+				this.errorAlertDialogBuilder
+						.setMessage(R.string.error_processing_reference_exam_message_alert_dialog);
+				this.errorAlertDialogBuilder
+						.setTitle(R.string.error_processing_reference_exam_title_alert_dialog);
+				(this.errorAlertDialogBuilder.create()).show();
+
+				return;
+			}
 		}
 	}
 
@@ -83,13 +177,18 @@ public class StudentExamCatcherActivity extends Activity {
 								R.array.bubbles_y_coordinates),
 						super.getResources().getInteger(
 								R.integer.questions_items_columns_amount));
+
+		this.studentExamHelper = new StudentExamHelper(
+				super.getApplicationContext());
+
+		this.newStudentExamAbsolutePath = null;
 	}
 
 	private void createWidgetsComponents() {
 		Log.v(TAG, "createWidgetsComponents():void");
 
-		this.alertDialogBuilder = new AlertDialog.Builder(this);
-		this.alertDialogBuilder.setPositiveButton(R.string.accept_button,
+		this.errorAlertDialogBuilder = new AlertDialog.Builder(this);
+		this.errorAlertDialogBuilder.setPositiveButton(R.string.accept_button,
 				new DialogInterface.OnClickListener() {
 
 					@Override()
@@ -98,7 +197,7 @@ public class StudentExamCatcherActivity extends Activity {
 					}
 				});
 
-		this.progressDialog = new ProgressDialog(this.getApplicationContext());
+		this.progressDialog = new ProgressDialog(this);
 		this.progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		this.progressDialog.setCancelable(false);
 	}
@@ -106,15 +205,20 @@ public class StudentExamCatcherActivity extends Activity {
 	private void extractValuesFromBundle(Bundle bundle) {
 		Log.v(TAG, "extractValuesFromBundle(Bundle):void");
 
-		if (bundle.containsKey(REFERENCE_EXAM_PATH_KEY)) {
+		if ((bundle != null) && (bundle.containsKey(REFERENCE_EXAM_PATH_KEY))) {
 			this.referenceExamAbsolutePath = bundle
 					.getString(REFERENCE_EXAM_PATH_KEY);
 		}
 
 		if ((TextUtils.isEmpty(this.referenceExamAbsolutePath))
 				|| (TextUtils.isEmpty(this.referenceExamAbsolutePath.trim()))) {
-			// FIXME: Add the message and title.
-			(this.alertDialogBuilder.create()).show();
+			this.errorAlertDialogBuilder
+					.setMessage(R.string.no_reference_exam_name_found_message_alert_dialog);
+			this.errorAlertDialogBuilder
+					.setTitle(R.string.no_reference_exam_name_found_title_alert_dialog);
+			(this.errorAlertDialogBuilder.create()).show();
+
+			return;
 		}
 	}
 }

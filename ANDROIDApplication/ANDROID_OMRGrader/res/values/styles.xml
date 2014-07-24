@@ -27,6 +27,8 @@
     <!-- Exam Result Question Option -->
     <style name="QuestionOptionTextViewTheme" parent="AppBaseTheme">
         <item name="android:gravity">center</item>
+        <item name="android:background">@color/normal_answer_background_text_view</item>
+        <item name="android:textColor">@color/answer_text_color_text_view</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:textStyle">bold</item>
     </style>

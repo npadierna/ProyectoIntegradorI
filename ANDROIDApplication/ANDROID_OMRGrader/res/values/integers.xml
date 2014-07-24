@@ -7,31 +7,31 @@
     <integer name="questions_options_amout">4</integer>
 
     <integer-array name="bubbles_x_coordinates">
-        <item>128</item>
-        <item>161</item>
-        <item>194</item>
-        <item>227</item>
-        <item>337</item>
-        <item>370</item>
-        <item>403</item>
-        <item>436</item>
+        <item>168</item>
+        <item>210</item>
+        <item>252</item>
+        <item>294</item>
+        <item>521</item>
+        <item>563</item>
+        <item>604</item>
+        <item>647</item>
     </integer-array>
     <integer-array name="bubbles_y_coordinates">
-        <item>193</item>
-        <item>223</item>
-        <item>253</item>
-        <item>283</item>
-        <item>313</item>
-        <item>343</item>
-        <item>373</item>
-        <item>403</item>
-        <item>433</item>
-        <item>463</item>
-        <item>493</item>
-        <item>523</item>
-        <item>553</item>
-        <item>583</item>
-        <item>613</item>
+        <item>294</item>
+        <item>333</item>
+        <item>372</item>
+        <item>411</item>
+        <item>450</item>
+        <item>489</item>
+        <item>528</item>
+        <item>567</item>
+        <item>606</item>
+        <item>645</item>
+        <item>684</item>
+        <item>723</item>
+        <item>762</item>
+        <item>801</item>
+        <item>840</item>
     </integer-array>
 
 </resources>

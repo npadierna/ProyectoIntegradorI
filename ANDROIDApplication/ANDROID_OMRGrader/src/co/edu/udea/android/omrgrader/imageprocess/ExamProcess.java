@@ -29,6 +29,8 @@ final class ExamProcess {
 
 		this.questionsOptionsAmout = questionsOptionsAmout;
 		this.bubblesCentersPointsList = bubblesCentersPointsList;
+
+		QuestionItem.questionsOptionsAmout = this.questionsOptionsAmout;
 	}
 
 	public List<Point> getBubblesCentersPointsList() {
@@ -42,12 +44,12 @@ final class ExamProcess {
 
 	public List<QuestionItem> findAnswers(Mat examPictureMat,
 			List<Point> bubblesCentersPointsList, int bubbleRadius, int thresh) {
-		// int thresh = 150;
 		List<QuestionItem> questionsItemsList = new ArrayList<QuestionItem>();
 
 		for (int i = 0; i < (bubblesCentersPointsList.size() / this.questionsOptionsAmout); i++) {
 			boolean[] answers = new boolean[this.questionsOptionsAmout];
 			int[] pixelCounter = new int[this.questionsOptionsAmout];
+
 			StringBuilder stringBuilder = new StringBuilder();
 
 			for (int j = 0; j < this.questionsOptionsAmout; j++) {
@@ -63,7 +65,6 @@ final class ExamProcess {
 
 			questionsItemsList.add(new QuestionItem((short) (i + 1), answers));
 
-			// FIXME: TAG.
 			Log.d(TAG, String.format(
 					"White pixeles count for question #%d: %s", i,
 					stringBuilder.toString()));

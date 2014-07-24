@@ -4,7 +4,6 @@ import java.io.File;
 
 import android.content.Context;
 import co.edu.udea.android.omrgrader.R;
-import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
 
 /**
  * 
@@ -18,15 +17,10 @@ public class StudentExamHelper extends AbstractExamHelper {
 		super(context);
 	}
 
-	public void createIntentForTakingStudentExamPicture(
-			String studentExamPictureName) throws OMRGraderProcessException {
-		File destinationDirectoryFile = super
-				.getBaseStorageDirectory()
-				.getStorageDirectoriesFilesMap()
-				.get(super.getContext().getResources()
-						.getString(R.string.album_tests_name));
+	@Override()
+	public File obtainDirectoryFileForExams() {
 
-		super.createIntentForTakingPicture(studentExamPictureName,
-				destinationDirectoryFile);
+		return (super.getBaseStorageDirectory().getStorageDirectoriesFilesMap()
+				.get(super.getContext().getString(R.string.album_tests_name)));
 	}
 }

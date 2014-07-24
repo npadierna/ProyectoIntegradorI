@@ -50,7 +50,7 @@ abstract class AbstractExamHelper {
 		this.context = context;
 	}
 
-	protected void createIntentForTakingPicture(String examPictureName,
+	protected File createIntentForTakingPicture(String examPictureName,
 			File destinationDirectoryFile) throws OMRGraderProcessException {
 		if (TextUtils.isEmpty(examPictureName)
 				|| (destinationDirectoryFile == null)
@@ -75,10 +75,16 @@ abstract class AbstractExamHelper {
 			takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 			this.getContext().startActivity(takePictureIntent);
+
+			return (takenReferencePictureFile);
 		} catch (Exception e) {
+			takenReferencePictureFile = null;
+
 			throw new OMRGraderProcessException(
 					"A exception has ocurred while the Camera Application was being requested for taking the photo",
 					e);
 		}
 	}
+
+	public abstract File obtainDirectoryFileForExams();
 }
