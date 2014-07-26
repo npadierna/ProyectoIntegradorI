@@ -60,11 +60,22 @@
     <string name="main_text_dialog_fragment">Por favor, ingrese el nombre con el cual desea guardar el nuevo Examen de Referencia:</string>
     <string name="main_title_dialog_fragment">Ingresar Nuevo Nombre</string>
 
-    <!-- Main Session Activity -->
+    <!-- Main Session Fragment Activity -->
     <string name="new_grader_session_button">Calificar Nueva Sesión de Exámenes</string>
     <string name="new_reference_template_button">Capturar Nuevo Examen de Referencia</string>
     <string name="no_reference_exam_taken_message_alert_dialog">No se ha podido procesar exitosamente la operación para tomar un nuevo Examen de Referencia.\nPor favor, intente de nuevo.</string>
     <string name="no_reference_exam_taken_title_alert_dialog">Toma de Examen Falalda</string>
+    <string name="reference_exam_guide_first_step_text_view">1. Dar clic en el botón: Capturar Nuevo Examen de Referencia.</string>
+    <string name="reference_exam_guide_second_step_text_view">2. Ingresar el nombre apropiado para el nuevo examen.</string>
+    <string name="reference_exam_guide_third_step_text_view">3. Capturar con la cámara el nuevo Examen de Referencia.</string>
+    <string name="reference_exam_guide_tittle_text_view">Exámanes de Referencia</string>
+    <string name="student_exam_guide_first_step_text_view">1. Dar clic en el botón: Calificar Nueva Sesión de Exámenes.</string>
+    <string name="student_exam_guide_second_step_text_view">2. Seleccionar del listado que se despliega el Examen de Referencia a utilizar.</string>
+    <string name="student_exam_guide_third_step_text_view">3. Esperar a que el programa procese exitosamente el Examen de Referencia seleccionado.</string>
+    <string name="student_exam_guide_fourth_step_text_view">4. Capturar con la cámara el Examen del Estudiante que se desea evaluar.</string>
+    <string name="student_exam_guide_fifth_step_text_view">5. Esperar a que el programa procese exitosamente el nuevo Examen del Estudiante.</string>
+    <string name="student_exam_guide_sixth_step_text_view">6. Observar la tabla de resultados obtenidos durante la sesión de calificación.</string>
+    <string name="student_exam_guide_tittle_text_view">Exámanes de Estudiantes</string>
 
     <!-- Menu Main Session Activity -->
     <string name="about_us_main_session_menu_item">Acerca de Nosotros</string>

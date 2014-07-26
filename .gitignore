@@ -4,3 +4,7 @@
 *.jar
 *.war
 *.ear
+*.dex
+*.cache
+*.apk
+ANDROIDApplication/ANDROID_OMRGrader/bin/R.txt
