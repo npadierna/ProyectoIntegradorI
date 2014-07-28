@@ -2,7 +2,7 @@
 <resources>
 
     <integer name="question_item_bubble_radius_length">10</integer>
-    <integer name="question_item_bubble_thresh">150</integer>
+    <integer name="question_item_bubble_thresh">100</integer>
     <integer name="questions_items_columns_amount">2</integer>
     <integer name="questions_options_amout">4</integer>
 

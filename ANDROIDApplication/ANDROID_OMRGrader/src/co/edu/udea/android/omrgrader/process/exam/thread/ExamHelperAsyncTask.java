@@ -26,7 +26,7 @@ public class ExamHelperAsyncTask extends AsyncTask<Object, Void, AbstractExam> {
 	public ExamHelperAsyncTask(ProgressDialog progressDialog) {
 		super();
 
-		this.progressDialog = progressDialog;
+		this.progressDialog = new ProgressDialog(progressDialog.getContext());
 	}
 
 	@Override()

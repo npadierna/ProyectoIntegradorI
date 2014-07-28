@@ -124,6 +124,6 @@ public class ExamResultListActivity extends ListActivity {
 
 		this.correctAnswersAmoutTextView.setText(String.format("%d / %d",
 				correctQuestionsAmout, totalQuestionsAmout));
-		this.finalGradeValueTextView.setText(String.valueOf(finalGrade));
+		this.finalGradeValueTextView.setText(String.format("%.2f", finalGrade));
 	}
 }

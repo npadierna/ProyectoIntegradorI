@@ -50,7 +50,10 @@ public class StudentExamCatcherActivity extends Activity {
 				try {
 					// FIXME: Add the corrects title and message for the
 					// Progress Dialog.
-					this.newStudentExamAbsolutePath = "/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG";
+					// this.newStudentExamAbsolutePath =
+					// "/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG";
+
+					this.handleBigCameraImage();
 
 					this.examGraderSession.computeStudentExam(
 							this.progressDialog,
@@ -219,6 +222,17 @@ public class StudentExamCatcherActivity extends Activity {
 			(this.errorAlertDialogBuilder.create()).show();
 
 			return;
+		}
+	}
+
+	private void handleBigCameraImage() {
+		if (this.newStudentExamAbsolutePath != null) {
+			Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+
+			Uri uri = Uri.fromFile(new File(this.newStudentExamAbsolutePath));
+			intent.setData(uri);
+
+			super.sendBroadcast(intent);
 		}
 	}
 }
