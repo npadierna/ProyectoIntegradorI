@@ -115,7 +115,11 @@ public class ExamResultListActivity extends ListActivity {
 		float maximumGrade = Float
 				.valueOf(sharedPreferences.getString(
 						super.getString(R.string.grader_settings_preference_maximum_grade_key),
-						"0.0"));
+						String.valueOf(super
+								.getString(R.string.grader_settings_preference_default_maximum_grade))));
+
+		Log.i(TAG, String.format("Maximum Grade: %f", maximumGrade));
+
 		int totalQuestionsAmout = super.getResources().getInteger(
 				R.integer.questions_items_columns_amount)
 				* (super.getResources()

@@ -8,10 +8,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources.NotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -75,7 +77,7 @@ public class StudentExamCatcherActivity extends Activity {
 					Log.i(TAG, String.format(
 							"%s: Elapse milliseconds time: %d", "STUDENT EXAM",
 							(this.endingTime - this.startingTime)));
-					// *** Starting Performance Mode *** //
+					// *** Ending Performance Mode *** //
 				} catch (Exception e) {
 					this.errorAlertDialogBuilder
 							.setMessage(R.string.error_processing_student_exam_message_alert_dialog);
@@ -187,7 +189,7 @@ public class StudentExamCatcherActivity extends Activity {
 						.format("%s: Elapse milliseconds time: %d",
 								"REFERENCE EXAM",
 								(this.endingTime - this.startingTime)));
-				// *** Starting Performance Mode *** //
+				// *** Ending Performance Mode *** //
 			} catch (Exception e) {
 				this.errorAlertDialogBuilder
 						.setMessage(R.string.error_processing_reference_exam_message_alert_dialog);
@@ -203,14 +205,24 @@ public class StudentExamCatcherActivity extends Activity {
 	private void createComponents() {
 		Log.v(TAG, "createComponents():void");
 
+		SharedPreferences sharedPreferences = PreferenceManager
+				.getDefaultSharedPreferences(super.getApplicationContext());
+		int radiusLenght = Integer
+				.valueOf(sharedPreferences.getString(
+						super.getString(R.string.grader_settings_preference_radius_lenght_key),
+						String.valueOf(super.getResources().getInteger(
+								R.integer.question_item_bubble_thresh))));
+		int minimumThresh = Integer
+				.valueOf(sharedPreferences.getString(
+						super.getString(R.string.grader_settings_preference_minimum_thresh_key),
+						String.valueOf(super.getResources().getInteger(
+								R.integer.question_item_bubble_thresh))));
+
 		this.examGraderSession = new ExamGraderSession(
 				super.getApplicationContext(), this.referenceExamAbsolutePath,
 				super.getResources().getInteger(
-						R.integer.questions_options_amout), super
-						.getResources().getInteger(
-								R.integer.question_item_bubble_radius_length),
-				super.getResources().getInteger(
-						R.integer.question_item_bubble_thresh));
+						R.integer.questions_options_amout), radiusLenght,
+				minimumThresh);
 		this.examGraderSession
 				.buildBubblesCenterCoordinates(
 						super.getResources().getIntArray(

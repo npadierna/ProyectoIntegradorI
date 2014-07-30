@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- <EditTextPreference -->
-    <!-- android:defaultValue="5.0" -->
-    <!-- android:dialogMessage="@string/grader_settings_preference_maximum_grade_dialog_message" -->
-    <!-- android:dialogTitle="@string/grader_settings_preference_maximum_grade_dialog_title" -->
-    <!-- android:inputType="numberDecimal" -->
-    <!-- android:key="maximumGrade" -->
-    <!-- android:order="1" -->
-    <!-- android:persistent="true" -->
-    <!-- android:summary="@string/grader_settings_preference_maximum_grade_summary" -->
-    <!-- android:title="@string/grader_settings_preference_maximum_grade_title" > -->
-    <!-- </EditTextPreference> -->
-
-    <ListPreference
-        android:defaultValue="@string/grader_settings_preference_default_maximum_grade"
-        android:dialogTitle="@string/grader_settings_preference_maximum_grade_dialog_title"
-        android:entries="@array/grader_settings_preferences_array_key"
-        android:entryValues="@array/grader_settings_preferences_array_key"
-        android:key="@string/grader_settings_preference_maximum_grade_key"
+    <PreferenceCategory
         android:order="1"
-        android:persistent="true"
-        android:summary="@string/grader_settings_preference_maximum_grade_summary"
-        android:title="@string/grader_settings_preference_maximum_grade_title" >
-    </ListPreference>
+        android:title="@string/grader_settings_preference_exam_session_category_title" >
+        <ListPreference
+            android:defaultValue="@string/grader_settings_preference_default_maximum_grade"
+            android:dialogTitle="@string/grader_settings_preference_maximum_grade_dialog_title"
+            android:entries="@array/grader_settings_preferences_array_key"
+            android:entryValues="@array/grader_settings_preferences_array_key"
+            android:key="@string/grader_settings_preference_maximum_grade_key"
+            android:order="1"
+            android:persistent="true"
+            android:summary="@string/grader_settings_preference_maximum_grade_summary"
+            android:title="@string/grader_settings_preference_maximum_grade_title" >
+        </ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:order="2"
+        android:title="@string/grader_settings_preference_exam_processing_category_title" >
+        <EditTextPreference
+            android:defaultValue="@integer/question_item_bubble_radius_length"
+            android:dialogMessage="@string/grader_settings_preference_radius_lenght_dialog_message"
+            android:dialogTitle="@string/grader_settings_preference_radius_lenght_dialog_title"
+            android:inputType="number"
+            android:key="@string/grader_settings_preference_radius_lenght_key"
+            android:order="3"
+            android:persistent="true"
+            android:summary="@string/grader_settings_preference_radius_lenght_summary"
+            android:title="@string/grader_settings_preference_radius_lenght_title" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:defaultValue="@integer/question_item_bubble_thresh"
+            android:dialogMessage="@string/grader_settings_preference_minimum_thresh_dialog_message"
+            android:dialogTitle="@string/grader_settings_preference_minimum_thresh_dialog_title"
+            android:inputType="number"
+            android:key="@string/grader_settings_preference_minimum_thresh_key"
+            android:order="4"
+            android:persistent="true"
+            android:summary="@string/grader_settings_preference_minimum_thresh_summary"
+            android:title="@string/grader_settings_preference_minimum_thresh_title" >
+        </EditTextPreference>
+    </PreferenceCategory>
 
 </PreferenceScreen>

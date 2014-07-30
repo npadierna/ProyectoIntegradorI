@@ -54,6 +54,9 @@ public final class OMRGraderProcess {
 			int questionsOptionsAmout, int bubbleRadius, int thresh) {
 		super();
 
+		Log.i(TAG, String.format("Radius Lenght: %d", bubbleRadius));
+		Log.i(TAG, String.format("Minimum Thresh: %d", thresh));
+
 		this.setBubbleRadius(bubbleRadius);
 		this.setThresh(thresh);
 

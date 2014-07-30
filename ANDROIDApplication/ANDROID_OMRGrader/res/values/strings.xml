@@ -43,12 +43,30 @@
     <string name="pictures_prefix">.jpg</string>
 
     <!-- Grader Settings Preference Activity -->
-    <string name="grader_settings_preference_activity_name">Configuración de Calificación</string>
+    <string name="grader_settings_preference_activity_name">Configuraciones</string>
     <string name="grader_settings_preference_default_maximum_grade">5.0</string>
-    <string name="grader_settings_preference_maximum_grade_dialog_title">Máximo Valor de Nota</string>
+    <string name="grader_settings_preference_exam_processing_category_title">Procesamiento de Exámenes</string>
+    <string name="grader_settings_preference_exam_session_category_title">Sesión de Calificación</string>
+    <string name="grader_settings_preference_maximum_grade_dialog_title">Máximo Valor para la Nota</string>
     <string name="grader_settings_preference_maximum_grade_key">maximumGrade</string>
-    <string name="grader_settings_preference_maximum_grade_summary">Valor máximo para la nota o resultado establecido para la calificación.</string>
-    <string name="grader_settings_preference_maximum_grade_title">Máximo Valor de Nota</string>
+    <string name="grader_settings_preference_maximum_grade_summary">Valor máximo para la nota establecida para las sesiones de calificación.</string>
+    <string name="grader_settings_preference_maximum_grade_title">Máximo Valor para la Nota</string>
+    <string name="grader_settings_preference_radius_lenght_dialog_message">Ingrese el valor que desea establecer como longitud del Radio para las burbujas de las respuestas:</string>
+    <string name="grader_settings_preference_radius_lenght_dialog_title">Longitud del Radio</string>
+    <string name="grader_settings_preference_radius_lenght_key">radiusLenght</string>
+    <string name="grader_settings_preference_radius_lenght_summary">Valor para establer la longitud del radio en píxeles para las burbujas de las respuestas.</string>
+    <string name="grader_settings_preference_radius_lenght_title">Longitud del Radio</string>
+    <string name="grader_settings_preference_minimum_thresh_dialog_message">Ingrese el valor que desea establecer como mínimo Umbral para las burbujas de las respuestas seleccionadas:</string>
+    <string name="grader_settings_preference_minimum_thresh_dialog_title">Mínimo Valor del Umbral</string>
+    <string name="grader_settings_preference_minimum_thresh_key">minimumThresh</string>
+    <string name="grader_settings_preference_minimum_thresh_summary">Valor para establer el umbral mínimo en píxeles para las burbujas de las respuestas seleccionadas.</string>
+    <string name="grader_settings_preference_minimum_thresh_title">Mínimo Valor del Umbral</string>
+
+    <!-- Grader Settings Preference Fragment -->
+    <string name="bad_radius_lenght_value_message_alert_dialog">El nuevo valor especificado para la longitud de Radio es demasiado pequeño, grande o no es aceptable.\n\nEl valor será restaurado al valor por defecto.</string>
+    <string name="bad_radius_lenght_value_title_alert_dialog">Longitud de Radio No Aceptable</string>
+    <string name="bad_thresh_value_message_alert_dialog">El nuevo valor especificado para el Umbral es demasiado pequeño, grande o no es aceptable.\n\nEl valor será restaurado al valor por defecto.</string>
+    <string name="bad_thresh_value_title_alert_dialog">Umbral No Aceptable</string>
 
     <string-array name="grader_settings_preferences_array_key">
         <item>5.0</item>

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Maximum Acceptable Values for Grader Session -->
+    <integer name="maximum_radius_lenght">50</integer>
+    <integer name="maximum_thresh">500</integer>
+
+    <!-- Default Values for Grader Session -->
     <integer name="question_item_bubble_radius_length">10</integer>
     <integer name="question_item_bubble_thresh">100</integer>
     <integer name="questions_items_columns_amount">2</integer>
     <integer name="questions_options_amout">4</integer>
 
+    <!-- X Coordinates for All Bubbles -->
     <integer-array name="bubbles_x_coordinates">
         <item>168</item>
         <item>210</item>
@@ -16,6 +22,8 @@
         <item>604</item>
         <item>647</item>
     </integer-array>
+
+    <!-- Y Coordinates for All Bubbles -->
     <integer-array name="bubbles_y_coordinates">
         <item>294</item>
         <item>333</item>

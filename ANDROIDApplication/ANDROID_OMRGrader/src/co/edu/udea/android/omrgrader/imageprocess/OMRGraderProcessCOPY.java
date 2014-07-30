@@ -34,9 +34,9 @@ import co.edu.udea.android.omrgrader.imageprocess.model.QuestionItem;
  * @author Miguel &Aacute;ngel Ossa Ruiz
  * @author Neiber Padierna P&eacute;rez
  */
-public final class OfOMRGraderProcessCOPY {
+public final class OMRGraderProcessCOPY {
 
-	private static final String TAG = OfOMRGraderProcessCOPY.class.getSimpleName();
+	private static final String TAG = OMRGraderProcessCOPY.class.getSimpleName();
 
 	public static final DescriptorExtractor DESCRIPTOR_EXTRACTOR = DescriptorExtractor
 			.create(DescriptorExtractor.SURF);
@@ -51,7 +51,7 @@ public final class OfOMRGraderProcessCOPY {
 	private ExamProcess examProcess;
 	private ImageProcess imageProcess;
 
-	public OfOMRGraderProcessCOPY(List<Point> bubblesCentersPointsList,
+	public OMRGraderProcessCOPY(List<Point> bubblesCentersPointsList,
 			int questionsOptionsAmout, int bubbleRadius, int thresh) {
 		super();
 
