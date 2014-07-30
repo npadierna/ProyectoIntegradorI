@@ -10,9 +10,10 @@ import android.util.Log;
  */
 public class OMRGraderImageProcessException extends Exception {
 
-	private static final long serialVersionUID = 8830405776860663856L;
 	private static final String TAG = OMRGraderImageProcessException.class
 			.getSimpleName();
+
+	private static final long serialVersionUID = 8830405776860663856L;
 
 	public OMRGraderImageProcessException() {
 		super();

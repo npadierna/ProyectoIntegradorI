@@ -94,11 +94,11 @@ public class ExamResultListActivity extends ListActivity {
 		}
 
 		if (this.examGraderSession == null) {
-			// this.errorAlertDialogBuilder
-			// .setMessage(R.string.no_reference_exam_name_found_message_alert_dialog);
-			// this.errorAlertDialogBuilder
-			// .setTitle(R.string.no_reference_exam_name_found_title_alert_dialog);
-			// (this.errorAlertDialogBuilder.create()).show();
+			this.errorAlertDialogBuilder
+					.setMessage(R.string.no_exam_grader_session_found_message_alert_dialog);
+			this.errorAlertDialogBuilder
+					.setTitle(R.string.no_exam_grader_session_found_message_title_dialog);
+			(this.errorAlertDialogBuilder.create()).show();
 
 			return;
 		}

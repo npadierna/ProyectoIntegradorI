@@ -10,6 +10,12 @@ import co.edu.udea.android.omrgrader.process.exam.model.ExamQuestionItem;
 import co.edu.udea.android.omrgrader.process.model.ReferenceExam;
 import co.edu.udea.android.omrgrader.process.model.StudentExam;
 
+/**
+ * 
+ * @author Andersson Garc&iacute;a Sotelo
+ * @author Miguel &Aacute;ngel Ossa Ruiz
+ * @author Neiber Padierna P&eacute;rez
+ */
 public class ExamComparator {
 
 	private ExamGraderSession examGraderSession;

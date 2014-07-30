@@ -90,7 +90,8 @@ public class MainSessionActivity extends FragmentActivity {
 				.setMessage(R.string.no_reference_exam_taken_message_alert_dialog);
 		this.errorAlertDialogBuilder
 				.setTitle(R.string.no_reference_exam_taken_title_alert_dialog);
-		this.errorAlertDialogBuilder.setPositiveButton(R.string.accept_button, null);
+		this.errorAlertDialogBuilder.setPositiveButton(R.string.accept_button,
+				null);
 	}
 
 	public void putReferenceExamPictureName(String referencePictureName) {

@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
+/**
+ * 
+ * @author Andersson Garc&iacute;a Sotelo
+ * @author Miguel &Aacute;ngel Ossa Ruiz
+ * @author Neiber Padierna P&eacute;rez
+ */
 public class GraderSettingsPreferenceActivity extends Activity {
 
 	private static final String GRADER_SETTINGS_PREFERENCE_FRAGMENT = "Preference Fragment for Grader Settings";

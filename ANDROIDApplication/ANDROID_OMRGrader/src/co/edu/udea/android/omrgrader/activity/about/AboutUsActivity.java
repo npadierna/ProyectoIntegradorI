@@ -1,8 +1,8 @@
 package co.edu.udea.android.omrgrader.activity.about;
 
-import co.edu.udea.android.omrgrader.R;
 import android.app.Activity;
 import android.os.Bundle;
+import co.edu.udea.android.omrgrader.R;
 
 /**
  * 

@@ -21,12 +21,14 @@ import co.edu.udea.android.omrgrader.process.model.StudentExam;
  */
 public class ExamHelperAsyncTask extends AsyncTask<Object, Void, AbstractExam> {
 
+	private static Exam onlyLogosTemplateExam = null;
+
 	private ProgressDialog progressDialog;
 
 	public ExamHelperAsyncTask(ProgressDialog progressDialog) {
 		super();
 
-		this.progressDialog = new ProgressDialog(progressDialog.getContext());
+		this.progressDialog = progressDialog;
 	}
 
 	@Override()
@@ -49,8 +51,11 @@ public class ExamHelperAsyncTask extends AsyncTask<Object, Void, AbstractExam> {
 				bubblesCentersPointsList, questionsOptionsAmout, bubbleRadius,
 				thresh);
 
-		Exam onlyLogosTemplateExam = omrGraderProcess
-				.computeDescriptorsKeyPoints(onlyLogosTemplatePictureAsolutePath);
+		if (onlyLogosTemplateExam == null) {
+			onlyLogosTemplateExam = omrGraderProcess
+					.computeDescriptorsKeyPoints(onlyLogosTemplatePictureAsolutePath);
+		}
+
 		Exam exam = omrGraderProcess
 				.computeDescriptorsKeyPoints(examAbsolutePath);
 
@@ -68,7 +73,7 @@ public class ExamHelperAsyncTask extends AsyncTask<Object, Void, AbstractExam> {
 	protected void onCancelled() {
 		super.onCancelled();
 
-		if (this.progressDialog != null) {
+		if ((this.progressDialog != null) && (this.progressDialog.isShowing())) {
 			this.progressDialog.dismiss();
 		}
 	}
@@ -77,7 +82,7 @@ public class ExamHelperAsyncTask extends AsyncTask<Object, Void, AbstractExam> {
 	protected void onPostExecute(AbstractExam result) {
 		super.onPostExecute(result);
 
-		if (this.progressDialog != null) {
+		if ((this.progressDialog != null) && (this.progressDialog.isShowing())) {
 			this.progressDialog.dismiss();
 		}
 	}
@@ -86,7 +91,7 @@ public class ExamHelperAsyncTask extends AsyncTask<Object, Void, AbstractExam> {
 	protected void onPreExecute() {
 		super.onPreExecute();
 
-		if (this.progressDialog != null) {
+		if ((this.progressDialog != null) && (!this.progressDialog.isShowing())) {
 			this.progressDialog.show();
 		}
 	}

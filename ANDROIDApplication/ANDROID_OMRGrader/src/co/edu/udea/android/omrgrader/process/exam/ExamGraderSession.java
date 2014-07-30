@@ -11,6 +11,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import co.edu.udea.android.omrgrader.directory.BaseStorageDirectory;
 import co.edu.udea.android.omrgrader.process.exam.thread.ExamHelperAsyncTask;
 import co.edu.udea.android.omrgrader.process.exception.OMRGraderProcessException;
@@ -152,7 +153,12 @@ public final class ExamGraderSession implements Parcelable, Serializable {
 
 	public StudentExam computeStudentExam(ProgressDialog progressDialog,
 			String studentExamAbsolutePath) throws OMRGraderProcessException {
-		// FIXME: Check the validity of studentExamAbsolutePath parameter.
+		if ((TextUtils.isEmpty(studentExamAbsolutePath))
+				|| (TextUtils.isEmpty(studentExamAbsolutePath.trim()))) {
+			throw new OMRGraderProcessException(
+					"The Absolute Route Path for the new Student Exam is no valid.");
+		}
+
 		StudentExam studentExam = (StudentExam) this.computeExam(
 				progressDialog, studentExamAbsolutePath, Boolean.FALSE);
 

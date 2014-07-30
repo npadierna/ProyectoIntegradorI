@@ -3,7 +3,6 @@ package co.edu.udea.android.omrgrader.activity.exam.result;
 import java.util.List;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,17 +83,6 @@ final class ExamQuestionItemArrayAdapter extends ArrayAdapter<ExamQuestionItem> 
 					.setBackgroundColor(this.activity.getResources().getColor(
 							examQuestionItem
 									.getQuestionsItemsBackgroundColors()[pos]));
-
-			Log.d(ExamQuestionItemArrayAdapter.class.getSimpleName(),
-					String.format(
-							"Id: %d / Pos: %d -> %d",
-							examQuestionItem.getId(),
-							pos,
-							this.activity
-									.getResources()
-									.getColor(
-											examQuestionItem
-													.getQuestionsItemsBackgroundColors()[pos])));
 		}
 	}
 }

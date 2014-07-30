@@ -5,6 +5,12 @@ import java.util.List;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfKeyPoint;
 
+/**
+ * 
+ * @author Andersson Garc&iacute;a Sotelo
+ * @author Miguel &Aacute;ngel Ossa Ruiz
+ * @author Neiber Padierna P&eacute;rez
+ */
 public class Exam {
 
 	private List<QuestionItem> questionsItemsList;

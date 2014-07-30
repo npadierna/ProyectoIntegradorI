@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.res.Resources.NotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,6 +34,9 @@ public class StudentExamCatcherActivity extends Activity {
 	public static final String REFERENCE_EXAM_PATH_KEY = "Key for Reference Exam Path";
 	private static final int TAKE_STUDENT_EXAM_PICTURE_REQUEST = 1;
 
+	private long endingTime;
+	private long startingTime;
+
 	private String referenceExamAbsolutePath;
 	private String newStudentExamAbsolutePath;
 
@@ -48,18 +52,38 @@ public class StudentExamCatcherActivity extends Activity {
 		case TAKE_STUDENT_EXAM_PICTURE_REQUEST:
 			if (resultCode == Activity.RESULT_OK) {
 				try {
-					// FIXME: Add the corrects title and message for the
-					// Progress Dialog.
-					// this.newStudentExamAbsolutePath =
-					// "/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG";
+					this.progressDialog
+							.setMessage(super
+									.getString(R.string.student_exam_processing_message_progress_dialog));
+					this.progressDialog
+							.setTitle(R.string.student_exam_processing_title_progress_dialog);
 
+					// FIXME: This is not the correct absolute path.
+					this.newStudentExamAbsolutePath = "/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG";
+
+					// FIXME: Do this in a separated Thread.
 					this.handleBigCameraImage();
+
+					// *** Starting Performance Mode *** //
+					this.startingTime = SystemClock.elapsedRealtime();
 
 					this.examGraderSession.computeStudentExam(
 							this.progressDialog,
 							this.newStudentExamAbsolutePath);
+
+					this.endingTime = SystemClock.elapsedRealtime();
+					Log.i(TAG, String.format(
+							"%s: Elapse milliseconds time: %d", "STUDENT EXAM",
+							(this.endingTime - this.startingTime)));
+					// *** Starting Performance Mode *** //
 				} catch (Exception e) {
-					// FIXME: Fix this issue.
+					this.errorAlertDialogBuilder
+							.setMessage(R.string.error_processing_student_exam_message_alert_dialog);
+					this.errorAlertDialogBuilder
+							.setTitle(R.string.error_processing_student_exam_title_alert_dialog);
+					(this.errorAlertDialogBuilder.create()).show();
+
+					return;
 				}
 			}
 			break;
@@ -89,7 +113,11 @@ public class StudentExamCatcherActivity extends Activity {
 										.obtainDirectoryFileForExams())
 						.getAbsolutePath();
 			} catch (Exception e) {
-				// FIXME: Fix this issue.
+				this.errorAlertDialogBuilder
+						.setMessage(R.string.error_taking_student_exam_message_alert_dialog);
+				this.errorAlertDialogBuilder
+						.setTitle(R.string.error_taking_student_exam_title_alert_dialog);
+				(this.errorAlertDialogBuilder.create()).show();
 
 				return;
 			}
@@ -134,6 +162,7 @@ public class StudentExamCatcherActivity extends Activity {
 		super.onStart();
 
 		if (this.newStudentExamAbsolutePath == null) {
+			// FIXME: This is not the correct absolute path.
 			this.examGraderSession
 					.getGraderSession()
 					.getReferenceExam()
@@ -147,8 +176,18 @@ public class StudentExamCatcherActivity extends Activity {
 						.setTitle(super
 								.getString(R.string.reference_exam_processing_title_progress_dialog));
 
+				// *** Starting Performance Mode *** //
+				this.startingTime = SystemClock.elapsedRealtime();
+
 				this.examGraderSession
 						.computeReferenceExam(this.progressDialog);
+
+				this.endingTime = SystemClock.elapsedRealtime();
+				Log.i(TAG, String
+						.format("%s: Elapse milliseconds time: %d",
+								"REFERENCE EXAM",
+								(this.endingTime - this.startingTime)));
+				// *** Starting Performance Mode *** //
 			} catch (Exception e) {
 				this.errorAlertDialogBuilder
 						.setMessage(R.string.error_processing_reference_exam_message_alert_dialog);

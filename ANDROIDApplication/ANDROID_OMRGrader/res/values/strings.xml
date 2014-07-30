@@ -25,6 +25,8 @@
     <string name="exam_result_list_activity_name">Resultados Obtenidos</string>
     <string name="correct_answers_amout_message_text_view">Correctas:</string>
     <string name="final_grade_message_text_view">Nota Final:</string>
+    <string name="no_exam_grader_session_found_message_alert_dialog">Ha surgido un error grave en la Sesión de Calificación lo cual obliga a no poder continuar. Por favor, intente de nuevo.</string>
+    <string name="no_exam_grader_session_found_message_title_dialog">Erro Grave en la Sesión</string>
 
     <string-array name="answers_options_text">
         <item>A</item>
@@ -43,7 +45,6 @@
     <!-- Grader Settings Preference Activity -->
     <string name="grader_settings_preference_activity_name">Configuración de Calificación</string>
     <string name="grader_settings_preference_default_maximum_grade">5.0</string>
-    <string name="grader_settings_preference_maximum_grade_dialog_message">Digite el nuevo valor que desea para el máximo valor de la Nota al instante de efectuar la calificación:</string>
     <string name="grader_settings_preference_maximum_grade_dialog_title">Máximo Valor de Nota</string>
     <string name="grader_settings_preference_maximum_grade_key">maximumGrade</string>
     <string name="grader_settings_preference_maximum_grade_summary">Valor máximo para la nota o resultado establecido para la calificación.</string>
@@ -106,9 +107,11 @@
     <string name="error_processing_reference_exam_title_alert_dialog">Error Proesando Examen</string>
     <string name="error_processing_student_exam_message_alert_dialog">Un grave error ha surgido procesando el Examen del Estudiante, y no se ha podido completar la tarea.\nPor favor, intente de nuevo.</string>
     <string name="error_processing_student_exam_title_alert_dialog">Error Procesando Examen</string>
+    <string name="error_taking_student_exam_message_alert_dialog">Un error grave ha surgido mientras se intentaba tomar el Examen de Estudiante. Por favor, intente de nuevo.</string>
+    <string name="error_taking_student_exam_title_alert_dialog">Error Tomando Exámen de Estudiante</string>
     <string name="no_reference_exam_name_found_message_alert_dialog">El nombre o ruta absoluta del Examen de Referencia no es válida o posee problemas y el archivo no se puede acceder.\nPor favor, intente con otro examen.</string>
     <string name="no_reference_exam_name_found_title_alert_dialog">Nombre del Examen de Referencia</string>
-    <string name="reference_exam_processing_message_progress_dialog">Procesando el Examen de Referencia seleccionado para sesión de calificación#8230;</string>
+    <string name="reference_exam_processing_message_progress_dialog">Procesando el Examen de Referencia seleccionado para la sesión de calificación#8230;</string>
     <string name="reference_exam_processing_title_progress_dialog">Examen de Referencia</string>
     <string name="student_exam_processing_message_progress_dialog">Procesando el Examen del Estudiante tomado para ser calificado durante la sesión#8230;</string>
     <string name="student_exam_processing_title_progress_dialog">Examen de Estudiante</string>

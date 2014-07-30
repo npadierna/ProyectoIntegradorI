@@ -8,6 +8,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import co.edu.udea.android.omrgrader.R;
 
+/**
+ * 
+ * @author Andersson Garc&iacute;a Sotelo
+ * @author Miguel &Aacute;ngel Ossa Ruiz
+ * @author Neiber Padierna P&eacute;rez
+ */
 public class GraderSettingsPreferenceFragment extends PreferenceFragment
 		implements OnSharedPreferenceChangeListener {
 
