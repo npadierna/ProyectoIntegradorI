@@ -12,9 +12,9 @@ import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import co.edu.udea.android.omrgrader.R;
-import co.edu.udea.android.omrgrader.process.exam.ExamComparator;
-import co.edu.udea.android.omrgrader.process.exam.ExamGraderSession;
 import co.edu.udea.android.omrgrader.process.exam.model.ExamQuestionItem;
+import co.edu.udea.android.omrgrader.process.exam.session.ExamSessionComparator;
+import co.edu.udea.android.omrgrader.process.exam.session.ExamSessionGrader;
 
 /**
  * 
@@ -29,8 +29,8 @@ public class ExamResultListActivity extends ListActivity {
 
 	public static final String EXAM_GRADER_SESSION_KEY = "Key for ExamGraderSession Object";
 
-	private ExamComparator examComparator;
-	private ExamGraderSession examGraderSession;
+	private ExamSessionComparator examComparator;
+	private ExamSessionGrader examGraderSession;
 	private List<ExamQuestionItem> examQuestionsItemsList;
 
 	private AlertDialog.Builder errorAlertDialogBuilder;
@@ -51,7 +51,7 @@ public class ExamResultListActivity extends ListActivity {
 	private void createComponents() {
 		Log.v(TAG, "createComponents():void");
 
-		this.examComparator = new ExamComparator(super.getApplicationContext(),
+		this.examComparator = new ExamSessionComparator(super.getApplicationContext(),
 				this.examGraderSession);
 
 		this.examQuestionsItemsList = this.examComparator

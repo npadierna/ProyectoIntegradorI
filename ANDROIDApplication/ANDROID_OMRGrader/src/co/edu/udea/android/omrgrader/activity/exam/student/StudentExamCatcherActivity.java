@@ -2,6 +2,7 @@ package co.edu.udea.android.omrgrader.activity.exam.student;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources.NotFoundException;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -19,8 +21,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import co.edu.udea.android.omrgrader.R;
 import co.edu.udea.android.omrgrader.activity.exam.result.ExamResultListActivity;
-import co.edu.udea.android.omrgrader.process.exam.ExamGraderSession;
 import co.edu.udea.android.omrgrader.process.exam.StudentExamHelper;
+import co.edu.udea.android.omrgrader.process.exam.session.ExamSessionGrader;
+import co.edu.udea.android.omrgrader.process.exam.thread.GalleryHelperAsyncTask;
 
 /**
  * 
@@ -42,7 +45,7 @@ public class StudentExamCatcherActivity extends Activity {
 	private String referenceExamAbsolutePath;
 	private String newStudentExamAbsolutePath;
 
-	private ExamGraderSession examGraderSession;
+	private ExamSessionGrader examGraderSession;
 	private StudentExamHelper studentExamHelper;
 
 	private AlertDialog.Builder errorAlertDialogBuilder;
@@ -218,7 +221,7 @@ public class StudentExamCatcherActivity extends Activity {
 						String.valueOf(super.getResources().getInteger(
 								R.integer.question_item_bubble_thresh))));
 
-		this.examGraderSession = new ExamGraderSession(
+		this.examGraderSession = new ExamSessionGrader(
 				super.getApplicationContext(), this.referenceExamAbsolutePath,
 				super.getResources().getInteger(
 						R.integer.questions_options_amout), radiusLenght,
@@ -277,13 +280,24 @@ public class StudentExamCatcherActivity extends Activity {
 	}
 
 	private void handleBigCameraImage() {
-		if (this.newStudentExamAbsolutePath != null) {
-			Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		// if (this.newStudentExamAbsolutePath != null) {
+		// Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		//
+		// Uri uri = Uri.fromFile(new File(this.newStudentExamAbsolutePath));
+		// intent.setData(uri);
+		//
+		// super.sendBroadcast(intent);
+		// }
+		AsyncTask<String, Void, File> galleryHelperAsyncTask = new GalleryHelperAsyncTask(
+				super.getApplicationContext());
+		galleryHelperAsyncTask.execute(this.newStudentExamAbsolutePath);
 
-			Uri uri = Uri.fromFile(new File(this.newStudentExamAbsolutePath));
-			intent.setData(uri);
-
-			super.sendBroadcast(intent);
+		try {
+			galleryHelperAsyncTask.get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
 		}
 	}
 }
