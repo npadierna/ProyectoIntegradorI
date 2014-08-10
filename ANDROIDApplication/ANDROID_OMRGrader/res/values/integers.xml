@@ -2,44 +2,85 @@
 <resources>
 
     <!-- Maximum Acceptable Values for Grader Session -->
-    <integer name="maximum_radius_lenght">50</integer>
-    <integer name="maximum_thresh">500</integer>
+    <integer name="maximum_radius_lenght">10</integer>
+    <integer name="maximum_thresh">290</integer>
 
     <!-- Default Values for Grader Session -->
-    <integer name="question_item_bubble_radius_length">10</integer>
-    <integer name="question_item_bubble_thresh">100</integer>
-    <integer name="questions_items_columns_amount">2</integer>
-    <integer name="questions_options_amout">4</integer>
+    <integer name="question_item_bubble_radius_length">5</integer>
+    <integer name="question_item_bubble_thresh">75</integer>
+    <!-- <integer name="questions_items_columns_amount">2</integer> -->
+    <integer name="questions_items_columns_amount">3</integer>
+    <!-- <integer name="questions_options_amout">4</integer> -->
+    <integer name="questions_options_amout">5</integer>
 
     <!-- X Coordinates for All Bubbles -->
+    <!-- <integer-array name="bubbles_x_coordinates"> -->
+    <!-- <item>168</item> -->
+    <!-- <item>210</item> -->
+    <!-- <item>252</item> -->
+    <!-- <item>294</item> -->
+    <!-- <item>521</item> -->
+    <!-- <item>563</item> -->
+    <!-- <item>604</item> -->
+    <!-- <item>647</item> -->
+    <!-- </integer-array> -->
     <integer-array name="bubbles_x_coordinates">
-        <item>168</item>
-        <item>210</item>
-        <item>252</item>
-        <item>294</item>
-        <item>521</item>
-        <item>563</item>
-        <item>604</item>
-        <item>647</item>
+        <item>116</item>
+        <item>145</item>
+        <item>174</item>
+        <item>203</item>
+        <item>232</item>
+        <item>355</item>
+        <item>384</item>
+        <item>413</item>
+        <item>442</item>
+        <item>471</item>
+        <item>593</item>
+        <item>622</item>
+        <item>651</item>
+        <item>680</item>
+        <item>709</item>
     </integer-array>
 
     <!-- Y Coordinates for All Bubbles -->
+    <!-- <integer-array name="bubbles_y_coordinates"> -->
+    <!-- <item>294</item> -->
+    <!-- <item>333</item> -->
+    <!-- <item>372</item> -->
+    <!-- <item>411</item> -->
+    <!-- <item>450</item> -->
+    <!-- <item>489</item> -->
+    <!-- <item>528</item> -->
+    <!-- <item>567</item> -->
+    <!-- <item>606</item> -->
+    <!-- <item>645</item> -->
+    <!-- <item>684</item> -->
+    <!-- <item>723</item> -->
+    <!-- <item>762</item> -->
+    <!-- <item>801</item> -->
+    <!-- <item>840</item> -->
+    <!-- </integer-array> -->
     <integer-array name="bubbles_y_coordinates">
-        <item>294</item>
-        <item>333</item>
-        <item>372</item>
-        <item>411</item>
-        <item>450</item>
-        <item>489</item>
-        <item>528</item>
-        <item>567</item>
-        <item>606</item>
-        <item>645</item>
-        <item>684</item>
-        <item>723</item>
-        <item>762</item>
-        <item>801</item>
-        <item>840</item>
+        <item>340</item>
+        <item>367</item>
+        <item>394</item>
+        <item>421</item>
+        <item>448</item>
+        <item>475</item>
+        <item>502</item>
+        <item>529</item>
+        <item>556</item>
+        <item>583</item>
+        <item>610</item>
+        <item>637</item>
+        <item>664</item>
+        <item>691</item>
+        <item>718</item>
+        <item>745</item>
+        <item>772</item>
+        <item>799</item>
+        <item>826</item>
+        <item>853</item>
     </integer-array>
 
 </resources>

@@ -64,9 +64,8 @@ public class StudentExamCatcherActivity extends Activity {
 							.setTitle(R.string.student_exam_processing_title_progress_dialog);
 
 					// FIXME: This is not the correct absolute path.
-					this.newStudentExamAbsolutePath = "/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG";
+					this.newStudentExamAbsolutePath = "/storage/sdcard0/DCIM/OMRGrader/resources/UdeA/Answer_Sheet_-_Fullfit_(2).PNG";
 
-					// FIXME: Do this in a separated Thread.
 					this.handleBigCameraImage();
 
 					// *** Starting Performance Mode *** //
@@ -172,7 +171,7 @@ public class StudentExamCatcherActivity extends Activity {
 					.getGraderSession()
 					.getReferenceExam()
 					.setPictureAbsolutePath(
-							"/storage/sdcard0/DCIM/OMRGrader/resources/Full_Sample_5.PNG");
+							"/storage/sdcard0/DCIM/OMRGrader/resources/UdeA/Answer_Sheet_-_Fullfit_(1).PNG");
 			try {
 				this.progressDialog
 						.setMessage(super
@@ -214,7 +213,7 @@ public class StudentExamCatcherActivity extends Activity {
 				.valueOf(sharedPreferences.getString(
 						super.getString(R.string.grader_settings_preference_radius_lenght_key),
 						String.valueOf(super.getResources().getInteger(
-								R.integer.question_item_bubble_thresh))));
+								R.integer.question_item_bubble_radius_length))));
 		int minimumThresh = Integer
 				.valueOf(sharedPreferences.getString(
 						super.getString(R.string.grader_settings_preference_minimum_thresh_key),
@@ -280,14 +279,6 @@ public class StudentExamCatcherActivity extends Activity {
 	}
 
 	private void handleBigCameraImage() {
-		// if (this.newStudentExamAbsolutePath != null) {
-		// Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-		//
-		// Uri uri = Uri.fromFile(new File(this.newStudentExamAbsolutePath));
-		// intent.setData(uri);
-		//
-		// super.sendBroadcast(intent);
-		// }
 		AsyncTask<String, Void, File> galleryHelperAsyncTask = new GalleryHelperAsyncTask(
 				super.getApplicationContext());
 		galleryHelperAsyncTask.execute(this.newStudentExamAbsolutePath);
