@@ -53,7 +53,9 @@ final class ExamQuestionItemArrayAdapter extends ArrayAdapter<ExamQuestionItem> 
 					(TextView) view
 							.findViewById(R.id.third_answer_option_text_view),
 					(TextView) view
-							.findViewById(R.id.fourth_answer_option_text_view) };
+							.findViewById(R.id.fourth_answer_option_text_view),
+					(TextView) view
+							.findViewById(R.id.fifth_answer_option_text_view) };
 
 			questionItemViewHolder = new ExamQuestionItemViewHolder(
 					(TextView) view
