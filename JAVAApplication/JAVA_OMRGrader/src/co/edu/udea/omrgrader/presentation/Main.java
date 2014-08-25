@@ -46,5 +46,6 @@ public class Main {
 		timeEnd = System.currentTimeMillis();
 		
 		fullTime = timeEnd - timeStart;
+		System.out.println("Time Processing: " + fullTime + "milliseconds.");
 	}
 }
