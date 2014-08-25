@@ -173,8 +173,8 @@ int main(int argc, char *argv[]) {
 	struct list_item_struct *answers_struct =
 			(struct list_item_struct*) malloc(
 					sizeof(struct list_item_struct) * TOTAL_QUESTIONS_ITEMS);
-	getAnswers(image_solu_bw, center_locations_transfered, answers_struct, 11,
-			80);
+	getAnswers(image_solu_bw, center_locations_transfered, answers_struct, 10,
+			100);
 	printAnswers(answers_struct);
 	free(answers_struct);
 
@@ -184,8 +184,9 @@ int main(int argc, char *argv[]) {
 void printAnswers(struct list_item_struct *answers_struct) {
 	struct list_item_struct *temp = answers_struct;
 	for (int pos = 0; pos < TOTAL_QUESTIONS_ITEMS; pos++) {
-		fprintf(stdout, "Question #%d -> [%d %d %d %d]\n", temp->questionNum,
-				temp->choiceA, temp->choiceB, temp->choiceC, temp->choiceD);
+		fprintf(stdout, "Question #%02d -> [%d %d %d %d %d]\n",
+				temp->questionNum, temp->choiceA, temp->choiceB, temp->choiceC,
+				temp->choiceD, temp->choiceE);
 		temp++;
 	}
 }

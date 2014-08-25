@@ -5,13 +5,17 @@
 
 using namespace cv;
 
-const int TOTAL_QUESTIONS_ITEMS = 30;
+const int BUBBLES_CENTER_Y_COORDS[] = { 340, 367, 394, 421, 448, 475, 502, 529,
+		556, 583, 610, 637, 664, 691, 718, 745, 772, 799, 826, 853 };
 
-const int BUBBLES_CENTER_Y_COORDS[] = { 294, 333, 372, 411, 450, 489, 528, 567,
-		606, 645, 684, 723, 762, 801, 840 };
+const int BUBBLES_CENTER_X_COORDS[] = { 116, 145, 174, 203, 232, 355, 384, 413,
+		442, 471, 593, 622, 651, 680, 709 };
 
-const int BUBBLES_CENTER_X_COORDS[] =
-		{ 168, 210, 252, 294, 521, 563, 605, 647 };
+const int QUESTIONS_COLUMNS_AMOUT = 3;
+
+const int QUESTIONS_ITEMS_AMOUT = 5;
+
+const int TOTAL_QUESTIONS_ITEMS = 60;
 
 struct list_item_struct {
 
@@ -20,6 +24,7 @@ struct list_item_struct {
 	bool choiceB;
 	bool choiceC;
 	bool choiceD;
+	bool choiceE;
 };
 
 vector<Point2f> buildBubblesCenterLocations();

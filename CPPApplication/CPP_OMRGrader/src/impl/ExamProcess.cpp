@@ -2,34 +2,19 @@
 
 vector<Point2f> buildBubblesCenterLocations() {
 	vector<Point2f> center_locations;
-	for (int row = 0; row < (TOTAL_QUESTIONS_ITEMS / 2); row++) {
-		center_locations.push_back(
-				Point2f(BUBBLES_CENTER_X_COORDS[0],
-						BUBBLES_CENTER_Y_COORDS[row]));
-		center_locations.push_back(
-				Point2f(BUBBLES_CENTER_X_COORDS[1],
-						BUBBLES_CENTER_Y_COORDS[row]));
-		center_locations.push_back(
-				Point2f(BUBBLES_CENTER_X_COORDS[2],
-						BUBBLES_CENTER_Y_COORDS[row]));
-		center_locations.push_back(
-				Point2f(BUBBLES_CENTER_X_COORDS[3],
-						BUBBLES_CENTER_Y_COORDS[row]));
-	}
 
-	for (int row = 0; row < (TOTAL_QUESTIONS_ITEMS / 2); row++) {
-		center_locations.push_back(
-				Point2f(BUBBLES_CENTER_X_COORDS[4],
-						BUBBLES_CENTER_Y_COORDS[row]));
-		center_locations.push_back(
-				Point2f(BUBBLES_CENTER_X_COORDS[5],
-						BUBBLES_CENTER_Y_COORDS[row]));
-		center_locations.push_back(
-				Point2f(BUBBLES_CENTER_X_COORDS[6],
-						BUBBLES_CENTER_Y_COORDS[row]));
-		center_locations.push_back(
-				Point2f(BUBBLES_CENTER_X_COORDS[7],
-						BUBBLES_CENTER_Y_COORDS[row]));
+	int yCoordinateAmount = (int) (sizeof(BUBBLES_CENTER_Y_COORDS)
+			/ sizeof(BUBBLES_CENTER_Y_COORDS[0]));
+
+	for (int columnCounter = 1; columnCounter <= QUESTIONS_COLUMNS_AMOUT; columnCounter++) {
+		for (int yCoordinate = 0; yCoordinate < yCoordinateAmount; yCoordinate++) {
+			for (int pos = ((columnCounter - 1) * QUESTIONS_ITEMS_AMOUT); pos
+					< (columnCounter * QUESTIONS_ITEMS_AMOUT); pos++) {
+				center_locations.push_back(
+						Point2f(BUBBLES_CENTER_X_COORDS[pos],
+								BUBBLES_CENTER_Y_COORDS[yCoordinate]));
+			}
+		}
 	}
 
 	return (center_locations);
@@ -74,10 +59,10 @@ Mat drawTransferredSquare(Mat image_refer, vector<KeyPoint> keyPoints_ref,
 void getAnswers(Mat imgToProcess, vector<Point2f> pList,
 		struct list_item_struct *tempAnswerData, int radius, int thresh) {
 	for (int i = 0; i < TOTAL_QUESTIONS_ITEMS; i++) {
-		int pixelCnt[] = { 0, 0, 0, 0 };
+		int pixelCnt[QUESTIONS_ITEMS_AMOUT];
 
-		for (int j = 0; j < 4; j++) {
-			int position = i * 4 + j;
+		for (int j = 0; j < QUESTIONS_ITEMS_AMOUT; j++) {
+			int position = i * QUESTIONS_ITEMS_AMOUT + j;
 			Point2f pt = pList[position];
 
 			pixelCnt[j] = getWhitePixelsInBlob(imgToProcess, pt, radius);
@@ -88,6 +73,7 @@ void getAnswers(Mat imgToProcess, vector<Point2f> pList,
 		tempAnswerData->choiceB = (pixelCnt[1] > thresh);
 		tempAnswerData->choiceC = (pixelCnt[2] > thresh);
 		tempAnswerData->choiceD = (pixelCnt[3] > thresh);
+		tempAnswerData->choiceE = (pixelCnt[4] > thresh);
 		tempAnswerData++;
 	}
 }
