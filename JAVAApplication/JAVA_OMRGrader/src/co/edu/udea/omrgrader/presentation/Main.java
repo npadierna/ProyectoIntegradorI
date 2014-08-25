@@ -12,6 +12,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		Properties constants = new Properties();
+		long timeStart;
+		long timeEnd;
+		long fullTime;
+		
+		timeStart = System.currentTimeMillis();
+		
 		try {
 			constants.load(Main.class.getClassLoader().getResourceAsStream(
 					"co/edu/udea/omrgrader/model/util/constants.properties"));
@@ -36,5 +42,9 @@ public class Main {
 		} else {
 			System.out.println("Propiedades vacías");
 		}
+		
+		timeEnd = System.currentTimeMillis();
+		
+		fullTime = timeEnd - timeStart;
 	}
 }

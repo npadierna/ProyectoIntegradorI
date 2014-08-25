@@ -20,16 +20,16 @@ public class ExamProcess implements IExamProcess {
 	@Override
 	public List<QuestionItem> getAnswers(Mat imageToProcessMat,
 			List<Point> pointsList, int radius) {
-		int thresh = 150;
+		int thresh = 75;
 		List<QuestionItem> answersList = new ArrayList<QuestionItem>();
 
-		for (int i = 0; i < (pointsList.size() / 4); i++) {
-			boolean[] answers = new boolean[4];
-			int[] pixelCounter = new int[4];
+		for (int i = 0; i < (pointsList.size() / OPTION_AMOUNT); i++) {
+			boolean[] answers = new boolean[OPTION_AMOUNT];
+			int[] pixelCounter = new int[OPTION_AMOUNT];
 			StringBuilder stringBuilder = new StringBuilder();
 
-			for (int j = 0; j < 4; j++) {
-				int position = i * 4 + j;
+			for (int j = 0; j < OPTION_AMOUNT; j++) {
+				int position = i * OPTION_AMOUNT + j;
 				Point point = pointsList.get(position);
 
 				pixelCounter[j] = this.getWhitePixelsInCircle(
@@ -71,18 +71,14 @@ public class ExamProcess implements IExamProcess {
 	@Override
 	public List<Point> buildBubblesCenterLocations() {
 		List<Point> centerLocations = new ArrayList<Point>();
-		for (int row = 0; row < (TOTAL_QUESTIONS_ITEMS / 2); row++) {
-			centerLocations.add(new Point(x_cor.get(0), y_cor.get(row)));
-			centerLocations.add(new Point(x_cor.get(1), y_cor.get(row)));
-			centerLocations.add(new Point(x_cor.get(2), y_cor.get(row)));
-			centerLocations.add(new Point(x_cor.get(3), y_cor.get(row)));
-		}
 
-		for (int row = 0; row < (TOTAL_QUESTIONS_ITEMS / 2); row++) {
-			centerLocations.add(new Point(x_cor.get(4), y_cor.get(row)));
-			centerLocations.add(new Point(x_cor.get(5), y_cor.get(row)));
-			centerLocations.add(new Point(x_cor.get(6), y_cor.get(row)));
-			centerLocations.add(new Point(x_cor.get(7), y_cor.get(row)));
+		int length = (int) (x_cor.size() / QUESTION_ITEMS_COLUMNS_AMOUNT);
+		for (int columnCounter = 1; columnCounter <= QUESTION_ITEMS_COLUMNS_AMOUNT; columnCounter++) {
+			for (int yCoordinate : y_cor) {
+				for (int pos = ((columnCounter - 1) * length); pos < (columnCounter * length); pos++) {
+					centerLocations.add(new Point(x_cor.get(pos), yCoordinate));
+				}
+			}
 		}
 
 		return centerLocations;

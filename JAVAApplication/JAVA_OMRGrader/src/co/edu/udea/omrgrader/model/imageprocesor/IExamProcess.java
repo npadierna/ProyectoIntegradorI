@@ -11,13 +11,18 @@ import co.edu.udea.omrgrader.model.session.QuestionItem;
 
 public interface IExamProcess {
 
-	List<Integer> y_cor = new ArrayList<Integer>(Arrays.asList(294, 333, 372,
-			411, 450, 489, 528, 567, 606, 645, 684, 723, 762, 801, 840));
+	List<Integer> y_cor = new ArrayList<Integer>(Arrays.asList(340, 367, 394,
+			421, 448, 475, 502, 529, 556, 583, 610, 637, 664, 691, 718, 745,
+			772, 799, 826, 853));
 
-	List<Integer> x_cor = new ArrayList<Integer>(Arrays.asList(168, 210, 252,
-			294, 521, 563, 605, 647));
+	List<Integer> x_cor = new ArrayList<Integer>(Arrays.asList(116, 145, 174,
+			203, 232, 355, 384, 413, 442, 471, 593, 622, 651, 680, 709));
 
-	int TOTAL_QUESTIONS_ITEMS = 30;
+	int TOTAL_QUESTIONS_ITEMS = 60;
+	
+	int QUESTION_ITEMS_COLUMNS_AMOUNT = 3;
+	
+	int OPTION_AMOUNT = 5;
 
 	public List<QuestionItem> getAnswers(Mat imageToProcessMat,
 			List<Point> pointsList, int radius);

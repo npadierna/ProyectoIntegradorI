@@ -46,7 +46,7 @@ public class ImageProcess implements IImageProcess {
 
 	@Override
 	public void writeForConsole(boolean[] answer, int i) {
-		System.out.printf("%s%d [%b, %b, %b, %b]\n", "Question #", i,
-				answer[0], answer[1], answer[2], answer[3]);
+		System.out.printf("%s%02d [%b, %b, %b, %b, %b]\n", "Question #", i,
+				answer[0], answer[1], answer[2], answer[3], answer[4]);
 	}
 }
