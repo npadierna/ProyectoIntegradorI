@@ -1,11 +1,12 @@
 function answersForQuestions = computeAnswersBubbles(onlyLogosTemplatePath, ...
-    aReferringExamPath, bubblesCenterCoordinates, threshold, radius)
+    aReferringExamPath, bubblesCenterCoordinates, threshold, radius, ...
+    questionsItemsAmout)
 
     %%% Loading the images in a "Gray Scaled" color %%%
     onlyLogosTemplateGrayImage = rgb2gray(imread(onlyLogosTemplatePath));
 %     aReferringExamGrayImage = rgb2gray(imread(aReferringExamPath));
     aReferringExamGrayImage = imrotate(rgb2gray(imread( ...
-        aReferringExamPath)), +(45));
+        aReferringExamPath)), +(0));
 
     %%% Showing the both images load to algorithm %%%
     figure();
@@ -100,5 +101,5 @@ function answersForQuestions = computeAnswersBubbles(onlyLogosTemplatePath, ...
     %%% Analyzing each bubbles' questions for correct answers %%%
     answersForQuestions = findCorrectsAnswersForEachQuestion( ...
         aReferringExamGrayImage, transformedBubblesCenterCoordinates, ...
-        threshold, radius);
+        threshold, radius, questionsItemsAmout);
 end

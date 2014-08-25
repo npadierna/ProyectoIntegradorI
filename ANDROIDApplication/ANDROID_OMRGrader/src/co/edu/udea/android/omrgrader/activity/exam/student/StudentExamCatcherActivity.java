@@ -64,8 +64,7 @@ public class StudentExamCatcherActivity extends Activity {
 							.setTitle(R.string.student_exam_processing_title_progress_dialog);
 
 					// FIXME: This is not the correct absolute path.
-					// this.newStudentExamAbsolutePath =
-					// "/storage/sdcard0/DCIM/OMRGrader/resources/UdeA/Answer_Sheet_-_Fullfit_(2).PNG";
+					this.newStudentExamAbsolutePath = "/storage/sdcard0/DCIM/OMRGrader/resources/UdeA/Answer_Sheet_-_Fullfit_(2).PNG";
 
 					this.handleBigCameraImage();
 
@@ -172,7 +171,7 @@ public class StudentExamCatcherActivity extends Activity {
 					.getGraderSession()
 					.getReferenceExam()
 					.setPictureAbsolutePath(
-							"/storage/sdcard0/DCIM/OMRGrader/resources/UdeA/Answer_Sheet_-_Fullfit_(1).PNG");
+							"/storage/sdcard0/DCIM/OMRGrader/resources/UdeA/Answer_Sheet_-_Fullfit_(2).PNG");
 			try {
 				this.progressDialog
 						.setMessage(super
